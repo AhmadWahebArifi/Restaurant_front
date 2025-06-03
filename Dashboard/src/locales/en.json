@@ -1,0 +1,15 @@
+{
+  "language": {
+    "en": "English",
+    "fa": "Persian"
+  },
+  "overview": "Overview",
+  "menu": "Menu",
+  "customer": "Customer",
+  "table": "Table",
+  "users": "Users/Staff",
+  "payments": "Payments",
+  "orders": "Orders",
+  "report": "Delivery/Report",
+  "setting": "Setting"
+}
