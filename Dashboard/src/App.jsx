@@ -11,21 +11,27 @@ import Customer from "./pages/Customer";
 import Table from "./pages/Table";
 import axios from 'axios';
 import { useEffect } from 'react';
-
 function App() {
-  useEffect(() => {
-    axios.get('http://localhost:8000/api/ping')
-      .then(response => {
-        console.log('API Response:', response.data);
-      })
-      .catch(error => {
-        console.error('API Error:', error);
-      });
-  }, []);
-
   return (
-    <div>
-      <h1>React and Laravel API Connection Test</h1>
+    <div className="flex h-screen bg-gray-900 text-gray-100 overflow-hidden">
+      {/* BG */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 opacity-80" />
+        <div className="absolute inset-0 backdrop-blur-sm" />
+      </div>
+
+      <Sidebar />
+      <Routes>
+        <Route path="/" element={<OverviewPage />} />
+        <Route path="/products" element={<Menu />} />
+        <Route path="/customer" element={<Customer />} />
+        <Route path="/table" element={<Table />} />
+        <Route path="/users" element={<UsersPage />} />
+        <Route path="/sales" element={<SalesPage />} />
+        <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/analytics" element={<Report />} />
+        <Route path="/settings" element={<SettingsPage />} />
+      </Routes>
     </div>
   );
 }
