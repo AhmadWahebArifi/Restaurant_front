@@ -1,51 +1,57 @@
 const CustomerForm = () => {
+  const SubmitHandler = (event) => {
+    console.log(event.Phone);
+  };
   return (
-    <form>
+    <form onSubmit={SubmitHandler}>
       <div className="flex flex-wrap">
         <div className="p-5">
           <label
-            for="default-input"
+            for="name"
             className="mb-2.5 block text-base font-medium text-dark dark:text-white"
           >
             Name
           </label>
           <input
             type="text"
-            name="default-input"
+            name="name"
             placeholder="Enter full name"
             className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
           />
         </div>
         <div className="p-5">
           <label
-            for="default-input"
+            for="Phone"
             className="mb-2.5 block text-base font-medium text-dark dark:text-white"
           >
             Phone
           </label>
           <input
             type="text"
-            name="default-input"
+            name="Phone"
             placeholder="Enter Phone number"
             className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
           />
         </div>
         <div className="p-5">
           <label
-            for="default-input"
+            for="Address"
             className="mb-2.5 block text-base font-medium text-dark dark:text-white"
           >
             Address
           </label>
           <input
             type="text"
-            name="default-input"
+            name="Address"
             placeholder="Enter Address"
             className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
           />
         </div>
       </div>
-      <a className="inline-flex m-12 rounded-full border border-transparent bg-blue-950 px-7 py-3 text-center text-base font-medium text-dark shadow-1 hover:bg-blue-700 disabled:border-gray-3 disabled:bg-gray-3 disabled:text-dark-5 dark:bg-gray-2 dark:shadow-box-dark dark:hover:bg-dark-3">
+      <a
+        onClick={SubmitHandler}
+        className="inline-flex m-12 rounded-full border border-transparent bg-blue-950 px-7 py-3 text-center text-base font-medium text-dark shadow-1 hover:bg-blue-700 disabled:border-gray-3 disabled:bg-gray-3 disabled:text-dark-5 dark:bg-gray-2 dark:shadow-box-dark dark:hover:bg-dark-3"
+      >
         <span class="pr-[10px]">
           <svg
             width="20"

@@ -10,14 +10,14 @@ const Login = () => {
 
   return (
     <>
-      {ctx.isLogin ? (
-        <App />
-      ) : (
+      {/* {ctx.isLogin ? ( */}
+      <App />
+      {/* ) : (
         <Routes>
           <Route path="/" element={<LoginForm />} />
           <Route path="/signup-form" element={<Signup />} />
         </Routes>
-      )}
+      )} */}
     </>
   );
 };
