@@ -1,8 +1,9 @@
 import { UserCheck, UserPlus, UsersIcon, UserX } from "lucide-react";
 import { motion } from "framer-motion";
-
+import CustomerForm from "../components/customer/CustomerForm";
 import Header from "../components/common/Header";
 import StatCard from "../components/common/StatCard";
+import CustomerTable from "../components/customer/CustomerTable";
 
 const userStats = {
   totalUsers: 152845,
@@ -50,6 +51,8 @@ const Customer = () => {
           />
         </motion.div>
       </main>
+      <CustomerForm />
+      <CustomerTable />
     </div>
   );
 };
