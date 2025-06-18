@@ -2,35 +2,45 @@ import Logo from "../../image/f4.png";
 import { Formik, Field, ErrorMessage } from "formik";
 import { Eye } from "lucide-react";
 import * as Yup from "yup";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import authContext from "../../store/auth-context";
 
 const LoginSchema = Yup.object().shape({
-  username: Yup.string().required("نام ضروری می باشد"),
+  username: Yup.string().required("Name is required ! "),
   password: Yup.string()
-    .min(6, "پسورد از شش حرف کم نباشد")
-    .required("پسورد لازم است"),
+    .min(6, "Password shouldn't be less than 6")
+    .required("Password is requird"),
 });
 
 const Form = () => {
   const ctx = useContext(authContext);
   const [showPassword, setShowPassword] = useState(false);
 
+  // Prevent scrolling on body when this component is mounted
+  useEffect(() => {
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, []);
+
+  // ...existing code...
   return (
-    <div className="h-auto bg-gray-100 py-22 lg:py-[150px] dark:bg-dark overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-dark">
       <div className="container mx-auto">
-        <div className="-mx-4 flex flex-wrap">
-          <div className="w-full px-4">
-            <div className="relative mx-auto max-w-[525px] overflow-hidden rounded-2xl bg-white px-10 py-16 text-center sm:px-12 md:px-[60px] dark:bg-dark-2">
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="w-full max-w-[525px] px-4">
+            <div className="relative mx-auto rounded-2xl bg-white px-10 py-10 text-center sm:px-12 md:px-[60px] dark:bg-dark-2">
               <div className="mb-10 text-center md:mb-16">
-                <span className="ml-36 font-serif text-lg">خوش آمدید</span>
-                <a
-                  href="javascript:void(0)"
-                  className="mx-auto inline-block max-w-[60px]"
-                >
-                  <img src={Logo} alt="logo" />
-                </a>
+                <span className="font-serif text-lg block mb-2">Welcome</span>
+                <div className="flex justify-center">
+                  <a href="javascript:void(0)" className="inline-block">
+                    <img src={Logo} alt="logo" className="w-28" />
+                  </a>
+                </div>
               </div>
+
               {/* form */}
               <Formik
                 initialValues={{ username: "", password: "" }}
@@ -46,7 +56,7 @@ const Form = () => {
                       <Field
                         type="text"
                         name="username"
-                        placeholder="ایمل"
+                        placeholder="Email"
                         className={
                           "w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-body-color outline-hidden focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white"
                         }
@@ -63,14 +73,13 @@ const Form = () => {
                         <Field
                           type={showPassword ? "text" : "password"}
                           name="password"
-                          placeholder="پسورد"
-                          // Make padding match username field: px-5 py-3
+                          placeholder="Password"
                           className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword((prev) => !prev)}
-                          className="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-500"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-500"
                           tabIndex={-1}
                         >
                           <Eye size={18} />
@@ -103,15 +112,15 @@ const Form = () => {
                 href="#"
                 className="mb-2 inline-block text-base text-dark hover:text-primary hover:underline dark:text-white"
               >
-                پسورد تانرا از یاد برده اید ؟
+                Forget your password ?
               </a>
               <p className="text-base text-body-color dark:text-dark-6">
-                <span className="pr-0.5">تا حال عضو نیستید؟</span>
+                <span className="pr-0.5">Are you not a member yet ?</span>
                 <a
                   href="signup-form"
                   className="text-primary hover:underline m-2"
                 >
-                  ثبت نام
+                  Signup
                 </a>
               </p>
             </div>

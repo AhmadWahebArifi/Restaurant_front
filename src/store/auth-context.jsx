@@ -30,7 +30,7 @@ export const AuthContextProvider = ({ children }) => {
     }
   }, []);
 
-  const onLoginHandler = (name, password) => {
+  const onLoginHandler = (email, password) => {
     const userinfo = axios
       .post(
         "http://127.0.0.1:8000/api/login",
@@ -45,22 +45,22 @@ export const AuthContextProvider = ({ children }) => {
           },
         }
       )
-      .then((res) => {
-        console.log(res.data.success);
-        if (res.data.success) {
+      .then((response) => {
+        console.log(response.data.success);
+        if (response.data.token) {
           localStorage.setItem(email, password);
           setIsLogin(true);
         } else {
           setUserErrorMessage(res.data.message);
         }
       })
-      .catch((err) => {
-        console.log(err.res.data);
-        setUserErrorMessage("اشتباه صورت گرفته");
+      .catch((error) => {
+        console.log(error.response.data.errors);
+        setUserErrorMessage("Something went wrong !");
       });
-    setIsLogin(true);
-    localStorage.setItem(name, password);
-    console.log("login handler");
+    // setIsLogin(true);
+    // localStorage.setItem(name, password);
+    // console.log("login handler");
   };
 
   const onLogoutHandler = () => {
@@ -69,7 +69,12 @@ export const AuthContextProvider = ({ children }) => {
     console.log("logout handler");
   };
 
-  const onSignInHandler = (username, email, password) => {
+  const onSignInHandler = (
+    username,
+    email,
+    password,
+    password_confirmation
+  ) => {
     const userinfo = axios
       .post(
         "http://127.0.0.1:8000/api/register",
@@ -77,6 +82,7 @@ export const AuthContextProvider = ({ children }) => {
           name: username,
           email: email,
           password: password,
+          password_confirmation: password_confirmation,
         },
         {
           headers: {
@@ -85,7 +91,7 @@ export const AuthContextProvider = ({ children }) => {
           },
         }
       )
-      .then((res) => console.log(res.data))
+      .then((res) => console.log(res.errors))
       .then(() => setIsLogin(true))
       .then(() => setIsSign(true))
       .catch((err) => console.log(err.res.data));
