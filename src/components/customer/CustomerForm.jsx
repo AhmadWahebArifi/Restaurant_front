@@ -18,6 +18,7 @@ const CustomerForm = () => {
         },
         {
           headers: {
+            Authorization: "Bearer " + localStorage.getItem("auth_token"),
             "Content-Type": "applicatioin/json",
             Accept: "application/json",
           },

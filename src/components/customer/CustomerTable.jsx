@@ -21,7 +21,7 @@ const PRODUCT_DATA = [
 const CustomerTable = () => {
   useEffect(() => {
     const CustomerTableData = axios
-      .get("http://127.0.0.1:8000/api/customers")
+      .get("http://127.0.0.1:8000/api/customer")
       .then((response) => console.log(response.data));
   }, []);
 

@@ -14,12 +14,10 @@ export const AuthContextProvider = ({ children }) => {
   const [userErrorMessage, setUserErrorMessage] = useState();
 
   useEffect(() => {
-    const userInfo = localStorage.getItem("ahmadarifi");
-    if (userInfo === "123456") {
-      setTimeout(() => {
-        setIsLogin(true);
-        // localStorage.removeItem("ahmadarifi");
-      }, 0);
+    const userInfo = localStorage.getItem("loggedIn");
+    if (userInfo == 1) {
+      setIsLogin(true);
+      // localStorage.removeItem("ahmadarifi");
 
       // const identifier = setTimeout(() => {
       //   setIsLogin(true);
@@ -40,6 +38,7 @@ export const AuthContextProvider = ({ children }) => {
         },
         {
           headers: {
+            Authorization: "Bearer " + localStorage.getItem("auth_token"),
             "Content-Type": "applicatioin/json",
             Accept: "application/json",
           },
@@ -48,7 +47,7 @@ export const AuthContextProvider = ({ children }) => {
       .then((response) => {
         console.log(response.data.success);
         if (response.data.token) {
-          localStorage.setItem(email, password);
+          localStorage.setItem("loggedIn", 1);
           setIsLogin(true);
         } else {
           setUserErrorMessage(res.data.message);
@@ -91,9 +90,12 @@ export const AuthContextProvider = ({ children }) => {
           },
         }
       )
-      .then((response) => console.log(response.data))
-      .then(() => setIsLogin(true))
-      .then(() => setIsSign(true))
+      .then((response) => {
+        console.log(response.data.token);
+        localStorage.setItem("auth-token", response.data.token);
+        setIsLogin(true);
+        setIsSign(true);
+      })
       .catch((error) => console.log(error.response.data));
     console.log(userinfo);
   };
