@@ -1,9 +1,34 @@
+import { useRef } from "react";
+import axios from "axios";
+
 const CustomerForm = () => {
-  const SubmitHandler = (event) => {
-    console.log(event.Phone);
+  const nameInput = useRef();
+  const PhoneInput = useRef();
+  const AddressInput = useRef();
+
+  const SubmitHandler = () => {
+    // nameInput.current.value;
+    const InputInfo = axios
+      .post(
+        "http://127.0.0.1:8000/api/customer",
+        {
+          name: nameInput.current.value,
+          phone: PhoneInput.current.value,
+          address: AddressInput.current.value,
+        },
+        {
+          headers: {
+            "Content-Type": "applicatioin/json",
+            Accept: "application/json",
+          },
+        }
+      )
+      .then((res) => console.log(res.errors))
+      .catch((err) => console.log(err.res.data));
   };
+
   return (
-    <form onSubmit={SubmitHandler}>
+    <form method="post" onSubmit={SubmitHandler}>
       <div className="flex flex-wrap">
         <div className="p-5">
           <label
@@ -13,6 +38,7 @@ const CustomerForm = () => {
             Name
           </label>
           <input
+            ref={nameInput}
             type="text"
             name="name"
             placeholder="Enter full name"
@@ -27,6 +53,7 @@ const CustomerForm = () => {
             Phone
           </label>
           <input
+            ref={PhoneInput}
             type="text"
             name="Phone"
             placeholder="Enter Phone number"
@@ -41,6 +68,7 @@ const CustomerForm = () => {
             Address
           </label>
           <input
+            ref={AddressInput}
             type="text"
             name="Address"
             placeholder="Enter Address"

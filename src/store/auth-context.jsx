@@ -91,10 +91,10 @@ export const AuthContextProvider = ({ children }) => {
           },
         }
       )
-      .then((res) => console.log(res.errors))
+      .then((response) => console.log(response.data))
       .then(() => setIsLogin(true))
       .then(() => setIsSign(true))
-      .catch((err) => console.log(err.res.data));
+      .catch((error) => console.log(error.response.data));
     console.log(userinfo);
   };
 

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Edit, Search, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const PRODUCT_DATA = [
   {
@@ -18,6 +19,12 @@ const PRODUCT_DATA = [
 ];
 
 const CustomerTable = () => {
+  useEffect(() => {
+    const CustomerTableData = axios
+      .get("http://127.0.0.1:8000/api/customers")
+      .then((response) => console.log(response.data));
+  }, []);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(PRODUCT_DATA);
 
