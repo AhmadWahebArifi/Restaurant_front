@@ -17,8 +17,9 @@ const CustomerForm = () => {
           address: AddressInput.current.value,
         },
         {
+          withCredentials: true,
           headers: {
-            Authorization: "Bearer " + localStorage.getItem("auth_token"),
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
             "Content-Type": "applicatioin/json",
             Accept: "application/json",
           },
@@ -81,7 +82,7 @@ const CustomerForm = () => {
         onClick={SubmitHandler}
         className="inline-flex m-12 rounded-full border border-transparent bg-blue-950 px-7 py-3 text-center text-base font-medium text-dark shadow-1 hover:bg-blue-700 disabled:border-gray-3 disabled:bg-gray-3 disabled:text-dark-5 dark:bg-gray-2 dark:shadow-box-dark dark:hover:bg-dark-3"
       >
-        <span class="pr-[10px]">
+        <span className="pr-[10px]">
           <svg
             width="20"
             height="20"
