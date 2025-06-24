@@ -3,12 +3,12 @@ import Sidebar from "./components/common/Sidebar";
 import OverviewPage from "./pages/OverviewPage";
 import Menu from "./pages/Menu";
 import UsersPage from "./pages/UsersPage";
-import SalesPage from "./pages/SalesPage";
 import OrdersPage from "./pages/OrdersPage";
 import Report from "./pages/Delivery & Reports";
 import SettingsPage from "./pages/SettingsPage";
 import Customer from "./pages/Customer";
 import Table from "./pages/Table";
+import Payment from "./pages/Payment";
 function App() {
   return (
     <div className="flex h-screen bg-gray-900 text-gray-100 overflow-hidden">
@@ -24,7 +24,7 @@ function App() {
         <Route path="/customer" element={<Customer />} />
         <Route path="/table" element={<Table />} />
         <Route path="/users" element={<UsersPage />} />
-        <Route path="/sales" element={<SalesPage />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/analytics" element={<Report />} />
         <Route path="/settings" element={<SettingsPage />} />

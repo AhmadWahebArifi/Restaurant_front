@@ -1,30 +1,25 @@
 import { motion } from "framer-motion";
-import { Edit, Search, Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { Search } from "lucide-react";
+import { useState } from "react";
 
 const PRODUCT_DATA = [
   {
     id: 1,
-    name: "Ahmad",
-    phone: "0723219291",
-    address: "kabul",
+    order_id: 1,
+    payment_method: "cash",
+    payment_status: "succeeded",
+    amount: 30,
   },
   {
     id: 2,
-    name: "Ozair kooni",
-    phone: "0723129291",
-    address: "kabul",
+    order_id: 2,
+    payment_method: "credit card",
+    payment_status: "succeeded",
+    amount: 90,
   },
 ];
 
-const CustomerTable = () => {
-  useEffect(() => {
-    const CustomerTableData = axios
-      .get("http://127.0.0.1:8000/api/customer")
-      .then((response) => console.log(response.data));
-  }, []);
-
+const PaymentTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(PRODUCT_DATA);
 
@@ -40,14 +35,6 @@ const CustomerTable = () => {
     setFilteredProducts(filtered);
   };
 
-  const editHandler = (id) => {
-    //
-    const editData = "come from backend"; //
-    const editable = {
-      editData,
-      isEdit: false,
-    };
-  };
   return (
     <motion.div
       className="m-4 bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
@@ -56,7 +43,7 @@ const CustomerTable = () => {
       transition={{ delay: 0.2 }}
     >
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-100">Customers List</h2>
+        <h2 className="text-xl font-semibold text-gray-100">Payments</h2>
         <div className="relative">
           <input
             type="text"
@@ -74,16 +61,16 @@ const CustomerTable = () => {
           <thead>
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Name
+                Order_id
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Phone
+                Paument_method
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Address
+                Payment_status
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Actions
+                Amount
               </th>
             </tr>
           </thead>
@@ -102,23 +89,18 @@ const CustomerTable = () => {
                     alt="Product img"
                     className="size-10 rounded-full"
                   />
-                  {product.name}
+                  {product.order_id}
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  {product.phone}
+                  {product.payment_method}
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  {product.address}
+                  {product.payment_status}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  <button className="text-indigo-400 hover:text-indigo-300 mr-2">
-                    <Edit onClick={editHandler} size={18} />
-                  </button>
-                  <button className="text-red-400 hover:text-red-300">
-                    <Trash2 size={18} />
-                  </button>
+                  {product.amount}
                 </td>
               </motion.tr>
             ))}
@@ -128,4 +110,4 @@ const CustomerTable = () => {
     </motion.div>
   );
 };
-export default CustomerTable;
+export default PaymentTable;

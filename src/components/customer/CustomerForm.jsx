@@ -8,9 +8,13 @@ const CustomerForm = () => {
 
   const SubmitHandler = () => {
     // nameInput.current.value;
-    const InputInfo = axios
+    const url = editAble.isEdit
+      ? `http://127.0.0.1:8000/api/customer/edit/{editAble.editData.id}`
+      : "http://127.0.0.1:8000/api/customer";
+
+    axios
       .post(
-        "http://127.0.0.1:8000/api/customer",
+        url,
         {
           name: nameInput.current.value,
           phone: PhoneInput.current.value,
@@ -42,6 +46,7 @@ const CustomerForm = () => {
           <input
             ref={nameInput}
             type="text"
+            // value = {editable.isEdit ? editable.editData.name : ""}
             name="name"
             placeholder="Enter full name"
             className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"

@@ -3,15 +3,15 @@ import { motion } from "framer-motion";
 
 import Header from "../components/common/Header";
 import StatCard from "../components/common/StatCard";
-import DailyOrders from "../components/orders/DailyOrders";
-import OrderDistribution from "../components/orders/OrderDistribution";
+// import DailyOrders from "../components/orders/DailyOrders";
+// import OrderDistribution from "../components/orders/OrderDistribution";
 import OrdersTable from "../components/orders/OrdersTable";
 
 const orderStats = {
-  totalOrders: "1,234",
-  pendingOrders: "56",
-  completedOrders: "1,178",
-  totalRevenue: "$98,765",
+  totalOrders: "34",
+  pendingOrders: "1",
+  completedOrders: "33",
+  totalRevenue: "$980.23",
 };
 
 const OrdersPage = () => {
@@ -52,10 +52,10 @@ const OrdersPage = () => {
           />
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <DailyOrders />
           <OrderDistribution />
-        </div>
+        </div> */}
 
         <OrdersTable />
       </main>
