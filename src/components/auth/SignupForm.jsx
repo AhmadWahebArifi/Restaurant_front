@@ -67,13 +67,13 @@ const SignupForm = () => {
               >
                 {({ handleSubmit }) => (
                   <form onSubmit={handleSubmit}>
-                    <div className="mb-6">
+                    <div className="mb-6 text-black">
                       <Field
                         type="text"
                         name="username"
                         placeholder="Username"
                         className={
-                          "w-full rounded-md border border-stroke bg-transparent px-3 py-2 text-sm text-black outline-hidden focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white"
+                          "w-full rounded-md border border-stroke bg-transparent px-3 py-2 text-sm text-black outline-hidden focus:border-primary focus-visible:shadow-none dark:border-dark-3"
                         }
                       />
                       <ErrorMessage
@@ -89,7 +89,7 @@ const SignupForm = () => {
                         name="email"
                         placeholder="Email"
                         className={
-                          "w-full rounded-md border border-stroke bg-transparent px-3 py-2 text-sm text-black outline-hidden focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white"
+                          "w-full rounded-md border border-stroke bg-transparent px-3 py-2 text-sm text-black outline-hidden focus:border-primary focus-visible:shadow-none dark:border-dark-3  "
                         }
                       />
                       <ErrorMessage
@@ -105,7 +105,7 @@ const SignupForm = () => {
                           type={showPassword ? "text" : "password"}
                           name="password"
                           placeholder="Password"
-                          className="w-full rounded-md border border-stroke bg-transparent px-3 py-2 text-sm text-black placeholder-gray-500 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
+                          className="w-full rounded-md border border-stroke bg-transparent px-3 py-2 text-sm text-black placeholder-gray-500 outline-hidden focus:border-primary dark:border-dark-3   dark:placeholder-dark-5"
                         />
 
                         <button
@@ -127,7 +127,7 @@ const SignupForm = () => {
                           type={showPassword ? "text" : "password"}
                           name="password_confirm"
                           placeholder="Password Confirm"
-                          className="w-full rounded-md border border-stroke bg-transparent px-3 py-2 text-sm text-black placeholder-gray-500 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
+                          className="w-full rounded-md border border-stroke bg-transparent px-3 py-2 text-sm text-black placeholder-gray-500 outline-hidden focus:border-primary dark:border-dark-3   dark:placeholder-dark-5"
                         />
 
                         <button
