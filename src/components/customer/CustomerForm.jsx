@@ -6,26 +6,22 @@ const CustomerForm = () => {
   const PhoneInput = useRef();
   const AddressInput = useRef();
 
-  const SubmitHandler = () => {
-    // nameInput.current.value;
-    const InputInfo = axios
-      .post(
-        "http://127.0.0.1:8000/api/customer",
-        {
-          name: nameInput.current.value,
-          phone: PhoneInput.current.value,
-          address: AddressInput.current.value,
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("auth_token"),
-            "Content-Type": "applicatioin/json",
-            Accept: "application/json",
-          },
-        }
-      )
-      .then((res) => console.log(res.errors))
-      .catch((err) => console.log(err.res.data));
+  const SubmitHandler = (e) => {
+    e.preventDefault(); // if inside form, prevent refresh
+
+    axios.post('http://localhost:8000/api/customer', {
+      name: nameInput.current.value,
+      phone: PhoneInput.current.value,
+      address: AddressInput.current.value,
+    }, {
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log("Customer saved", res.data);
+      })
+      .catch((err) => {
+        console.log("Error saving customer:", err.response?.data);
+      });
   };
 
   return (
