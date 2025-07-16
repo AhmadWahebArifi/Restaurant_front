@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { authAPI } from "../axios";
+
 const authContext = React.createContext({
   isLogin: false,
   onLogout: () => { },
@@ -17,34 +18,19 @@ export const AuthContextProvider = ({ children }) => {
     const userInfo = localStorage.getItem("loggedIn");
     if (userInfo == 1) {
       setIsLogin(true);
-      // localStorage.removeItem("ahmadarifi");
-
-      // const identifier = setTimeout(() => {
-      //   setIsLogin(true);
-      // }, 0);
-      // return () => {
-      //   clearTimeout(identifier);
-      // };
     }
   }, []);
 
   const onLoginHandler = (email, password) => {
-    axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', {
-      withCredentials: true,
-    })
-      .then(() => {
-        // ✅ return this so the next .then gets the response
-        return axios.post('http://127.0.0.1:8000/api/login', {
-          email,
-          password,
-        }, {
-          withCredentials: true,
-        });
-      })
+    authAPI.login(email, password)
       .then((response) => {
         console.log(response.data);
 
         if (response.data.success || response.status === 200) {
+          // Store the token if it's returned
+          if (response.data.token) {
+            localStorage.setItem("auth-token", response.data.token);
+          }
           localStorage.setItem("loggedIn", 1);
           setIsLogin(true);
         } else {
@@ -57,76 +43,44 @@ export const AuthContextProvider = ({ children }) => {
       });
   };
 
-
-  // const userinfo = axios
-  //   .post(
-  //     "http://127.0.0.1:8000/api/login",
-  //     {
-  //       email: email,
-  //       password: password,
-  //     },
-  //     {
-  //       headers: {
-  //         Authorization: "Bearer " + localStorage.getItem("auth_token"),
-  //         "Content-Type": "applicatioin/json",
-  //         Accept: "application/json",
-  //       },
-  //     }
-  //   )
-  //   .then((response) => {
-  //     console.log(response.data.success);
-  //     if (response.data.token) {
-  //       localStorage.setItem("loggedIn", 1);
-  //       setIsLogin(true);
-  //     } else {
-  //       setUserErrorMessage(res.data.message);
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.log(error.response.data.errors);
-  //     setUserErrorMessage("Something went wrong !");
-  //   });
-  // setIsLogin(true);
-  // localStorage.setItem(name, password);
-  // console.log("login handler");
-  // };
-
   const onLogoutHandler = () => {
-    setIsLogin(false);
-    localStorage.removeItem("isLogged");
-    console.log("logout handler");
+    authAPI.logout()
+      .then(() => {
+        setIsLogin(false);
+        localStorage.removeItem("loggedIn");
+        localStorage.removeItem("auth-token");
+        console.log("logout handler");
+      })
+      .catch((error) => {
+        console.log("Logout error:", error);
+        // Even if logout fails, clear local state
+        setIsLogin(false);
+        localStorage.removeItem("loggedIn");
+        localStorage.removeItem("auth-token");
+      });
   };
 
   const onSignInHandler = (username, email, password, password_confirmation) => {
-    axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', {
-      withCredentials: true,
-    })
-      .then(() => {
-        // ✅ Return the POST request so the next .then() receives the result
-        return axios.post(
-          "http://127.0.0.1:8000/api/register",
-          {
-            name: username,
-            email: email,
-            password: password,
-            password_confirmation: password_confirmation,
-          },
-          {
-            withCredentials: true,
-          }
-        );
-      })
+    const userData = {
+      name: username,
+      email: email,
+      password: password,
+      password_confirmation: password_confirmation,
+    };
+
+    authAPI.register(userData)
       .then((response) => {
         console.log("Register success:", response.data.token);
         localStorage.setItem("auth-token", response.data.token);
+        localStorage.setItem("loggedIn", 1);
         setIsLogin(true);
         setIsSign(true);
       })
       .catch((error) => {
         console.log("Register error:", error.response?.data || error.message);
+        setUserErrorMessage(error.response?.data?.message || "Registration failed");
       });
   };
-
 
   return (
     <authContext.Provider
