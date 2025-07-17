@@ -51,14 +51,14 @@ const Form = () => {
                 }}
               >
                 {({ handleSubmit }) => (
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit} >
                     <div className="mb-6">
                       <Field
                         type="text"
                         name="username"
                         placeholder="Email"
                         className={
-                          "w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-body-color outline-hidden focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white"
+                          "w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-body-color outline-hidden focus:border-primary focus-visible:shadow-none dark:border-dark-3    "
                         }
                       />
                       <ErrorMessage
@@ -74,7 +74,7 @@ const Form = () => {
                           type={showPassword ? "text" : "password"}
                           name="password"
                           placeholder="Password"
-                          className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
+                          className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3     dark:placeholder-dark-5"
                         />
                         <button
                           type="button"
@@ -110,7 +110,7 @@ const Form = () => {
               </Formik>
               <a
                 href="#"
-                className="mb-2 inline-block text-base text-dark hover:text-primary hover:underline dark:text-white"
+                className="mb-2 inline-block text-base text-dark hover:text-primary hover:underline    "
               >
                 Forget your password ?
               </a>

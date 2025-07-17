@@ -1,5 +1,6 @@
 import { UserCheck, UserPlus, UsersIcon, UserX } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState, useCallback } from "react";
 import CustomerForm from "../components/customer/CustomerForm";
 import Header from "../components/common/Header";
 import StatCard from "../components/common/StatCard";
@@ -13,6 +14,12 @@ const userStats = {
 };
 
 const Customer = () => {
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const handleCustomerAdded = useCallback(() => {
+    setRefreshTrigger(prev => prev + 1);
+  }, []);
+
   return (
     <div className="flex-1 overflow-auto relative z-10">
       <Header title="Customer" />
@@ -51,8 +58,8 @@ const Customer = () => {
           />
         </motion.div>
       </main>
-      <CustomerForm />
-      <CustomerTable />
+      <CustomerForm onCustomerAdded={handleCustomerAdded} />
+      <CustomerTable refreshTrigger={refreshTrigger} />
     </div>
   );
 };

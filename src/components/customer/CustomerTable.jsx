@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Edit, Search, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../axios";
 
 const PRODUCT_DATA = [
   {
@@ -18,20 +18,58 @@ const PRODUCT_DATA = [
   },
 ];
 
-const CustomerTable = () => {
-  useEffect(() => {
-    const CustomerTableData = axios
-      .get("http://127.0.0.1:8000/api/customer")
-      .then((response) => console.log(response.data));
-  }, []);
-
+const CustomerTable = ({ refreshTrigger }) => {
+  const [customers, setCustomers] = useState(PRODUCT_DATA);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(PRODUCT_DATA);
+
+  const fetchCustomers = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get("/api/customer");
+      console.log("Customers data:", response.data);
+      
+      // Handle different response structures
+      let customerData = response.data;
+      if (response.data && response.data.data) {
+        customerData = response.data.data; // Handle nested data structure
+      }
+      
+      if (Array.isArray(customerData)) {
+        setCustomers(customerData);
+        setFilteredProducts(customerData);
+      } else {
+        console.warn("API response is not an array:", customerData);
+        setCustomers(PRODUCT_DATA); // Fallback to default data
+        setFilteredProducts(PRODUCT_DATA);
+      }
+    } catch (error) {
+      console.error("Error fetching customers:", error);
+      setError("Failed to load customers");
+      // Fallback to default data on error
+      setCustomers(PRODUCT_DATA);
+      setFilteredProducts(PRODUCT_DATA);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCustomers();
+  }, [refreshTrigger]); // Refetch when refreshTrigger changes
 
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = PRODUCT_DATA.filter(
+    
+    if (!Array.isArray(customers)) {
+      setFilteredProducts([]);
+      return;
+    }
+    
+    const filtered = customers.filter(
       (product) =>
         product.name.toLowerCase().includes(term) ||
         product.phone.toLowerCase().includes(term)
@@ -40,6 +78,7 @@ const CustomerTable = () => {
     setFilteredProducts(filtered);
   };
 
+<<<<<<< HEAD
   const editHandler = (id) => {
     //
     const editData = "come from backend"; //
@@ -48,6 +87,31 @@ const CustomerTable = () => {
       isEdit: false,
     };
   };
+=======
+  // Update filtered products when customers data changes
+  useEffect(() => {
+    if (Array.isArray(customers)) {
+      setFilteredProducts(customers);
+    }
+  }, [customers]);
+
+  if (loading) {
+    return (
+      <div className="m-4 bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8">
+        <div className="text-center text-gray-100">Loading customers...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="m-4 bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8">
+        <div className="text-center text-red-400">{error}</div>
+      </div>
+    );
+  }
+
+>>>>>>> 8fd6e9e84b230b3d56136c5a69e84c8ae411a748
   return (
     <motion.div
       className="m-4 bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
