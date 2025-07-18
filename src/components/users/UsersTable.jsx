@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const userData = [
   {
@@ -41,6 +42,7 @@ const userData = [
 ];
 
 const UsersTable = () => {
+  const [t] = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState(userData);
 
@@ -67,7 +69,7 @@ const UsersTable = () => {
         <div className="relative">
           <input
             type="text"
-            placeholder="Search users..."
+            placeholder={t("search")}
             className=" bg-blue-900 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={searchTerm}
             onChange={handleSearch}
@@ -81,19 +83,19 @@ const UsersTable = () => {
           <thead>
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Name
+                {t("name")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Email
+                {t("email")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Role
+                {t("role")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Status
+                {t("status")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Actions
+                {t("action")}
               </th>
             </tr>
           </thead>

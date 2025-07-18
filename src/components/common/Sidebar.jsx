@@ -14,48 +14,54 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ProgressBar from "./ProgressBar";
 
 const Sidebar = () => {
   const { t, i18n } = useTranslation();
-  const ov = t("overview");
-  const mu = t("menu");
-  const add_order = t("Add Order");
-  const cus = t("customer");
-  const tab = t("table");
-  const use = t("users");
-  const pay = t("payments");
-  const ord = t("orders");
-  const rep = t("report");
-  const st = t("setting");
 
   const SIDEBAR_ITEMS = [
     {
-      name: ov,
+      name: t("overview"),
       icon: BarChart2,
       color: "#6366f1",
       href: "/",
     },
     {
-      name: mu,
+      name: t("menu"),
       icon: ShoppingBag,
       color: "#8B5CF6",
       href: "/products",
     },
-    { name: cus, icon: UserCircle, color: "#6EE7B7", href: "/customer" },
-    { name: tab, icon: LayoutGrid, color: "#6EE7B7", href: "/table" },
-    { name: use, icon: Users, color: "#EC4899", href: "/users" },
-    { name: pay, icon: DollarSign, color: "#10B981", href: "/payment" },
-    { name: add_order, icon: ShoppingCart, color: "#F59E0B", href: "/add_orders" },
-    { name: ord, icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
     {
-      name: rep,
-      icon: TrendingUp,
-      color: "#3B82F6",
-      href: "/analytics",
+      name: t("customer"),
+      icon: UserCircle,
+      color: "#6EE7B7",
+      href: "/customer",
     },
-    { name: st, icon: Settings, color: "#6EE7B7", href: "/settings" },
+    { name: t("table"), icon: LayoutGrid, color: "#6EE7B7", href: "/table" },
+    { name: t("users"), icon: Users, color: "#EC4899", href: "/users" },
+    {
+      name: t("payments"),
+      icon: DollarSign,
+      color: "#10B981",
+      href: "/payment",
+    },
+    {
+      name: t("orders"),
+      icon: ShoppingCart,
+      color: "#F59E0B",
+      href: "/orders",
+    },
+    // {
+    //   name: rep,
+    //   icon: TrendingUp,
+    //   color: "#3B82F6",
+    //   href: "/analytics",
+    // },
+    { name: t("setting"), icon: Settings, color: "#6EE7B7", href: "/settings" },
   ];
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [progressTrigger, setProgressTrigger] = useState(0);
 
   return (
     <motion.div
@@ -64,6 +70,10 @@ const Sidebar = () => {
       animate={{ width: isSidebarOpen ? 256 : 80 }}
     >
       <div className="h-full bg-blue-950 bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-gray-700">
+        {/* Progress Bar at the top */}
+        <div className="mb-2">
+          <ProgressBar trigger={progressTrigger} />
+        </div>
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -75,7 +85,11 @@ const Sidebar = () => {
 
         <nav className="mt-8 flex-grow">
           {SIDEBAR_ITEMS.map((item) => (
-            <Link key={item.href} to={item.href}>
+            <Link
+              key={item.href}
+              to={item.href}
+              onClick={() => setProgressTrigger((prev) => prev + 1)}
+            >
               <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors mb-2">
                 <item.icon
                   size={20}

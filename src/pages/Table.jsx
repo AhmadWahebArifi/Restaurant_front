@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
 import Header from "../components/common/Header";
 import StatCard from "../components/common/StatCard";
-import { AlertTriangle, DollarSign, Package, TrendingUp } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { Package } from "lucide-react";
 import T from "../components/table/Table";
 
 const Table = () => {
+  const [t] = useTranslation();
   return (
     <div className="flex-1 overflow-auto relative z-10">
-      <Header title="Menu" />
+      <Header title={t("table")} />
 
       <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
         {/* STATS */}
@@ -18,7 +20,7 @@ const Table = () => {
           transition={{ duration: 1 }}
         >
           <StatCard
-            name="Total Tables"
+            name={t("totaltable")}
             icon={Package}
             value={3}
             color="#6366F1"

@@ -11,13 +11,13 @@ const Profile = () => {
   };
   const { i18n, t } = useTranslation();
   return (
-    <SettingSection icon={Languages} title={"Language"}>
+    <SettingSection icon={Languages} title={t("Language")}>
       <div>
         <label
           for="choose-country"
           class="mb-2.5 block text-base font-medium text-dark dark:text-black"
         >
-          Choose a language
+          {t("choosealanguage")}
         </label>
         <div class="relative">
           <select

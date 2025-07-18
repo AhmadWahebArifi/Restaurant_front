@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const PRODUCT_DATA = [
   {
@@ -20,6 +21,7 @@ const PRODUCT_DATA = [
 ];
 
 const PaymentTable = () => {
+  const [t] = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(PRODUCT_DATA);
 
@@ -47,7 +49,7 @@ const PaymentTable = () => {
         <div className="relative">
           <input
             type="text"
-            placeholder="Search customers..."
+            placeholder={t("search")}
             className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleSearch}
             value={searchTerm}
@@ -61,16 +63,16 @@ const PaymentTable = () => {
           <thead>
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Order_id
+                {t("order_id")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Paument_method
+                {t("paymentmethod")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Payment_status
+                {t("paymentstatus")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Amount
+                {t("amount")}
               </th>
             </tr>
           </thead>
@@ -84,11 +86,6 @@ const PaymentTable = () => {
                 transition={{ duration: 0.3 }}
               >
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 flex gap-2 items-center">
-                  <img
-                    src="https://images.unsplash.com/photo-1627989580309-bfaf3e58af6f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d2lyZWxlc3MlMjBlYXJidWRzfGVufDB8fDB8fHww"
-                    alt="Product img"
-                    className="size-10 rounded-full"
-                  />
                   {product.order_id}
                 </td>
 
