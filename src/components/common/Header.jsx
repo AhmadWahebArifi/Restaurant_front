@@ -1,8 +1,11 @@
+import Logout from "../settings/Logout";
+
 const Header = ({ title }) => {
   return (
     <header className=" bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg border-b border-gray-700">
       <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl font-semibold text-gray-100">{title}</h1>
+        <Logout />
       </div>
     </header>
   );
