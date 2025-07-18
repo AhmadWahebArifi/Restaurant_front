@@ -96,12 +96,12 @@ const AddOrderForm = ({ onCustomerAdded }) => {
                         >
                             Select Customer
                         </option>
-                        {/* {customers.map((customer, index) => (
+                        {customers.map((customer, index) => (
                             <option key={index} value={customer.id} className="bg-black text-dark dark:text-white"
                             >
                                 {customer.name}
                             </option>
-                        ))} */}
+                        ))}
                     </select>
                 </div>
                 <div className="p-5">
@@ -135,12 +135,12 @@ const AddOrderForm = ({ onCustomerAdded }) => {
                         >
                             Select Order Status
                         </option>
-                        {/* {categories.map((cat, index) => (
+                        {status.map((cat, index) => (
                             <option key={index} value={cat} className="bg-black text-dark dark:text-white"
                             >
                                 {cat}
                             </option>
-                        ))} */}
+                        ))}
                     </select>
                 </div>
                 <div className="p-5">
