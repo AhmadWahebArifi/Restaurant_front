@@ -1,8 +1,17 @@
 import { useRef, useState, useContext, useEffect } from "react";
 import api from "../../axios";
 import authContext from "../../store/auth-context";
+import { useTranslation } from "react-i18next";
 
 const AddMenuItem = () => {
+    const { t, i18n } = useTranslation();
+    const cat = t("category");
+    const nam = t("name");
+    const des = t("description");
+    const pr = t("price");
+    const adding = t("adding");
+    const add = t("add");
+
     const nameInput = useRef();
     const descriptionInput = useRef();
     const PriceInput = useRef();
@@ -13,7 +22,7 @@ const AddMenuItem = () => {
     const [message, setMessage] = useState("");
 
     const [categories, setCategories] = useState([]);
-    // ****************************************************
+
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -27,7 +36,7 @@ const AddMenuItem = () => {
         fetchCategories();
     }, []);
 
-    // **********************************************
+    console.log(categories);
     const SubmitHandler = async (e) => {
         e.preventDefault();
 
@@ -41,15 +50,14 @@ const AddMenuItem = () => {
         setMessage("");
 
         try {
-            const menuItems = {
+            const customerData = {
                 name: nameInput.current.value,
                 description: descriptionInput.current.value,
-                price: PriceInput.current.value,
-                category: categoryInput.current.value
+                Price: PriceInput.current.value,
             };
-            console.log(menuItems)
+
             // Make API call to save customer
-            const response = await api.post("/api/menu-item", menuItems);
+            const response = await api.post("/api/customer", customerData);
 
             if (response.status === 201 || response.status === 200) {
                 setMessage("Customer added successfully!");
@@ -57,16 +65,14 @@ const AddMenuItem = () => {
                 nameInput.current.value = "";
                 descriptionInput.current.value = "";
                 PriceInput.current.value = "";
-                categoryInput.current.value = "";
 
-                // // Notify parent component to refresh the table
-                // if (onCustomerAdded) {
-                //     onCustomerAdded();
-                // }
+                // Notify parent component to refresh the table
+                if (onCustomerAdded) {
+                    onCustomerAdded();
+                }
             } else {
                 setMessage("Failed to add customer. Please try again.");
             }
-
         } catch (error) {
             console.log("Error saving customer:", error.response?.data);
             console.log("Error status:", error.response?.status);
@@ -85,7 +91,7 @@ const AddMenuItem = () => {
                         htmlFor="name"
                         className="mb-2.5 block text-base font-medium text-dark dark:text-white"
                     >
-                        Name
+                        {nam}
                     </label>
                     <input
                         ref={nameInput}
@@ -101,7 +107,7 @@ const AddMenuItem = () => {
                         htmlFor="description"
                         className="mb-2.5 block text-base font-medium text-dark dark:text-white"
                     >
-                        description
+                        {des}
                     </label>
                     <input
                         ref={descriptionInput}
@@ -117,7 +123,7 @@ const AddMenuItem = () => {
                         htmlFor="Price"
                         className="mb-2.5 block text-base font-medium text-dark dark:text-white"
                     >
-                        Price
+                        {pr}
                     </label>
                     <input
                         ref={PriceInput}
@@ -133,24 +139,28 @@ const AddMenuItem = () => {
                         htmlFor="Price"
                         className="mb-2.5 block text-base font-medium text-dark dark:text-white"
                     >
-                        Category
+                        {cat}
                     </label>
                     <select
                         ref={categoryInput}
-                        className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5">
+                        className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
+                    >
                         {categories.map((cat, index) => (
-                            <option key={index} value={cat}>{cat}</option>
+                            <option key={index} value={cat}>
+                                {cat}
+                            </option>
                         ))}
                     </select>
-
                 </div>
             </div>
 
             {message && (
-                <div className={`px-5 py-2 rounded-lg ${message.includes("successfully")
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800"
-                    }`}>
+                <div
+                    className={`px-5 py-2 rounded-lg ${message.includes("successfully")
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
+                >
                     {message}
                 </div>
             )}
@@ -180,7 +190,7 @@ const AddMenuItem = () => {
                         </defs>
                     </svg>
                 </span>
-                {loading ? "Adding..." : "Add Item"}
+                {loading ? `${adding}...` : `${add}`}
             </button>
         </form>
     );

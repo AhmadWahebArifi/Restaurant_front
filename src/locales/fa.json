@@ -12,5 +12,17 @@
   "orders": "سفارشات",
   "report": "تحویل و ریپورت",
   "setting": "تنظیمات",
-  "totalorders": "تعداد کل فروشات"
+  "totalorders": "تعداد کل فروشات",
+  "totalrevenue": "کل درامد",
+  "topselling": "کل فروشات",
+  "category": "کتگوری",
+  "name": "نام",
+  "description": "مشحصات",
+  "price": "قیمت",
+  "add": "اضافه",
+  "adding": "در حال اضافه کردن",
+  "search": "جستجو",
+  "is_available": "دسترسی",
+  "category_id": "ای دی گنگوری",
+  "action": "عملیه"
 }
