@@ -4,7 +4,7 @@ import OverviewPage from "./pages/OverviewPage";
 import Menu from "./pages/Menu";
 import UsersPage from "./pages/UsersPage";
 import OrdersPage from "./pages/OrdersPage";
-import Report from "./pages/Delivery & Reports";
+// import Report from "./pages/Delivery & Reports";
 import SettingsPage from "./pages/SettingsPage";
 import Customer from "./pages/Customer";
 import Table from "./pages/Table";
@@ -29,7 +29,7 @@ function App() {
         {/* <Route path="/payment" element={<Payment />} /> */}
         <Route path="/add_orders" element={<AddOrder />} />
         <Route path="/orders" element={<OrdersPage />} />
-        <Route path="/analytics" element={<Report />} />
+        {/* <Route path="/analytics" element={<Report />} /> */}
         <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </div>

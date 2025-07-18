@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Edit, Search, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "../../axios";
+import { useTranslation } from "react-i18next";
 
 const PRODUCT_DATA = [
   {
@@ -19,6 +20,8 @@ const PRODUCT_DATA = [
 ];
 
 const CustomerTable = ({ refreshTrigger }) => {
+  const [t] = useTranslation();
+
   const [customers, setCustomers] = useState(PRODUCT_DATA);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -128,16 +131,16 @@ const CustomerTable = ({ refreshTrigger }) => {
           <thead>
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Name
+                {t("name")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Phone
+                {t("phone")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Address
+                {t("address")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Actions
+                {t("action")}
               </th>
             </tr>
           </thead>

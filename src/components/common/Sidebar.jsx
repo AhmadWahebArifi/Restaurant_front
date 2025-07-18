@@ -14,6 +14,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ProgressBar from "./ProgressBar";
 
 const Sidebar = () => {
   const { t, i18n } = useTranslation();
@@ -30,13 +31,13 @@ const Sidebar = () => {
 
   const SIDEBAR_ITEMS = [
     {
-      name: ov,
+      name: t("overview"),
       icon: BarChart2,
       color: "#6366f1",
       href: "/",
     },
     {
-      name: mu,
+      name: t("menu"),
       icon: ShoppingBag,
       color: "#8B5CF6",
       href: "/products",
@@ -56,6 +57,7 @@ const Sidebar = () => {
     { name: st, icon: Settings, color: "#6EE7B7", href: "/settings" },
   ];
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [progressTrigger, setProgressTrigger] = useState(0);
 
   return (
     <motion.div
@@ -64,6 +66,10 @@ const Sidebar = () => {
       animate={{ width: isSidebarOpen ? 256 : 80 }}
     >
       <div className="h-full bg-blue-950 bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-gray-700">
+        {/* Progress Bar at the top */}
+        <div className="mb-2">
+          <ProgressBar trigger={progressTrigger} />
+        </div>
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -75,7 +81,11 @@ const Sidebar = () => {
 
         <nav className="mt-8 flex-grow">
           {SIDEBAR_ITEMS.map((item) => (
-            <Link key={item.href} to={item.href}>
+            <Link
+              key={item.href}
+              to={item.href}
+              onClick={() => setProgressTrigger((prev) => prev + 1)}
+            >
               <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors mb-2">
                 <item.icon
                   size={20}

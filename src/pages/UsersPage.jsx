@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Header from "../components/common/Header";
 import StatCard from "../components/common/StatCard";
 import UsersTable from "../components/users/UsersTable";
+import { useTranslation } from "react-i18next";
 
 const userStats = {
   totalUsers: 5,
@@ -10,9 +11,10 @@ const userStats = {
 };
 
 const UsersPage = () => {
+  const [t] = useTranslation();
   return (
     <div className="flex-1 overflow-auto relative z-10">
-      <Header title="Users" />
+      <Header title={t("users")} />
 
       <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
         {/* STATS */}
@@ -23,13 +25,13 @@ const UsersPage = () => {
           transition={{ duration: 1 }}
         >
           <StatCard
-            name="Total Users"
+            name={t("totalemployee")}
             icon={UsersIcon}
             value={userStats.totalUsers.toLocaleString()}
             color="#6366F1"
           />
           <StatCard
-            name="Active Users"
+            name={t("activeemployee")}
             icon={UserCheck}
             value={userStats.activeUsers.toLocaleString()}
             color="#F59E0B"
