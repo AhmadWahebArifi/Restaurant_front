@@ -7,6 +7,8 @@ import CategoryDistributionChart from "../components/products/CategoryDistributi
 import ProductsTable from "../components/products/ProductsTable";
 import MenuForm from "../components/menu/menuForm";
 import { useTranslation } from "react-i18next";
+import { useCallback, useState } from "react";
+import SuccessCard from "../components/common/SuccessCard";
 
 const ProductsPage = () => {
   const { t, i18n } = useTranslation();
@@ -14,7 +16,16 @@ const ProductsPage = () => {
   const ts = t("totalorders");
   const tos = t("topselling");
   const re = t("totalrevenue");
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [showSuccess, setShowSuccess] = useState(false);
 
+  const handleCustomerAdded = useCallback(() => {
+    setRefreshTrigger((prev) => prev + 1);
+    setShowSuccess(true);
+  }, []);
+  {
+    showSuccess && <SuccessCard onClose={() => setShowSuccess(false)} />;
+  }
   return (
     <div className="flex-1 overflow-auto relative z-10">
       <Header title={me} />
@@ -37,8 +48,8 @@ const ProductsPage = () => {
           />
         </motion.div>
         {/* <MenuForm /> */}
-        <AddMenuItem />
-        <ProductsTable />
+        <AddMenuItem onCustomerAdded={handleCustomerAdded} />
+        <ProductsTable refreshTrigger={refreshTrigger} />
 
         {/* CHARTS */}
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">

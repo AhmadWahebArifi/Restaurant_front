@@ -9,6 +9,7 @@ import SettingsPage from "./pages/SettingsPage";
 import Customer from "./pages/Customer";
 import Table from "./pages/Table";
 import Payment from "./pages/Payment";
+import AddOrder from "./pages/AddOrder";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/table" element={<Table />} />
         <Route path="/users" element={<UsersPage />} />
         {/* <Route path="/payment" element={<Payment />} /> */}
+        <Route path="/add_orders" element={<AddOrder />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/analytics" element={<Report />} />
         <Route path="/settings" element={<SettingsPage />} />

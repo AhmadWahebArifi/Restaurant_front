@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Edit, Search, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import api from "../../axios";
 
 const PRODUCT_DATA = [
   {
@@ -30,7 +31,7 @@ const PRODUCT_DATA = [
   },
 ];
 
-const ProductsTable = () => {
+const ProductsTable = ({ refreshTrigger }) => {
   const { t, i18n } = useTranslation();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -47,6 +48,66 @@ const ProductsTable = () => {
 
     setFilteredProducts(filtered);
   };
+
+
+  const [menuItems, setMenuItems] = useState(PRODUCT_DATA);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+
+  const fetchMenuItems = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get("/api/menu-item");
+
+      let menuItems = response.data.menuItem; // ✅ Extract the array
+
+      if (Array.isArray(menuItems)) {
+        setMenuItems(menuItems);
+        setFilteredProducts(menuItems);
+      } else {
+        console.warn("API response is not an array:", menuItems);
+        setMenuItems(PRODUCT_DATA); // fallback
+        setFilteredProducts(PRODUCT_DATA);
+      }
+    } catch (error) {
+      console.error("Error fetching menuItems:", error);
+      setError("Failed to load menuItems");
+      setMenuItems(PRODUCT_DATA);
+      setFilteredProducts(PRODUCT_DATA);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchMenuItems();
+  }, [refreshTrigger]); // Refetch when refreshTrigger changes
+
+
+  // Update filtered products when menuItems data changes
+  useEffect(() => {
+    if (Array.isArray(menuItems)) {
+      setFilteredProducts(menuItems);
+    }
+  }, [menuItems]);
+
+  if (loading) {
+    return (
+      <div className="m-4 bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8">
+        <div className="text-center text-gray-100">Loading menuItems...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="m-4 bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8">
+        <div className="text-center text-red-400">{error}</div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -83,7 +144,7 @@ const ProductsTable = () => {
                 {t("is_available")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                {t("category_id")}
+                {t("category")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                 {t("price")}
@@ -117,15 +178,15 @@ const ProductsTable = () => {
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  {product.is_available}
+                  {product.is_available ? 'Avaiable' : 'Not Available'}
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  {product.category_id}
+                  {product.category}
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  ${product.price.toFixed(2)}
+                  ${product.price}
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">

@@ -3,7 +3,7 @@ import api from "../../axios";
 import authContext from "../../store/auth-context";
 import { useTranslation } from "react-i18next";
 
-const AddMenuItem = () => {
+const AddMenuItem = ({ onCustomerAdded }) => {
     const { t, i18n } = useTranslation();
     const cat = t("category");
     const nam = t("name");
@@ -36,7 +36,6 @@ const AddMenuItem = () => {
         fetchCategories();
     }, []);
 
-    console.log(categories);
     const SubmitHandler = async (e) => {
         e.preventDefault();
 
@@ -50,21 +49,23 @@ const AddMenuItem = () => {
         setMessage("");
 
         try {
-            const customerData = {
+            const menuItem = {
                 name: nameInput.current.value,
                 description: descriptionInput.current.value,
-                Price: PriceInput.current.value,
+                price: PriceInput.current.value,
+                category: categoryInput.current.value
             };
-
+            console.log(menuItem);
             // Make API call to save customer
-            const response = await api.post("/api/customer", customerData);
+            const response = await api.post("/api/menu-item", menuItem);
 
             if (response.status === 201 || response.status === 200) {
-                setMessage("Customer added successfully!");
+                setMessage("Menu Item added successfully!");
                 // Clear form fields
                 nameInput.current.value = "";
                 descriptionInput.current.value = "";
                 PriceInput.current.value = "";
+                categoryInput.current.value = "";
 
                 // Notify parent component to refresh the table
                 if (onCustomerAdded) {
@@ -145,8 +146,13 @@ const AddMenuItem = () => {
                         ref={categoryInput}
                         className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
                     >
+                        <option className="bg-black text-dark dark:text-white"
+                        >
+                            select category
+                        </option>
                         {categories.map((cat, index) => (
-                            <option key={index} value={cat}>
+                            <option key={index} value={cat} className="bg-black text-dark dark:text-white"
+                            >
                                 {cat}
                             </option>
                         ))}
@@ -157,8 +163,8 @@ const AddMenuItem = () => {
             {message && (
                 <div
                     className={`px-5 py-2 rounded-lg ${message.includes("successfully")
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
                         }`}
                 >
                     {message}

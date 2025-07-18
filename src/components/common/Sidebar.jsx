@@ -19,6 +19,7 @@ const Sidebar = () => {
   const { t, i18n } = useTranslation();
   const ov = t("overview");
   const mu = t("menu");
+  const add_order = t("Add Order");
   const cus = t("customer");
   const tab = t("table");
   const use = t("users");
@@ -44,6 +45,7 @@ const Sidebar = () => {
     { name: tab, icon: LayoutGrid, color: "#6EE7B7", href: "/table" },
     { name: use, icon: Users, color: "#EC4899", href: "/users" },
     { name: pay, icon: DollarSign, color: "#10B981", href: "/payment" },
+    { name: add_order, icon: ShoppingCart, color: "#F59E0B", href: "/add_orders" },
     { name: ord, icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
     {
       name: rep,
@@ -57,9 +59,8 @@ const Sidebar = () => {
 
   return (
     <motion.div
-      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
-        isSidebarOpen ? "w-64" : "w-20"
-      }`}
+      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${isSidebarOpen ? "w-64" : "w-20"
+        }`}
       animate={{ width: isSidebarOpen ? 256 : 80 }}
     >
       <div className="h-full bg-blue-950 bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-gray-700">
