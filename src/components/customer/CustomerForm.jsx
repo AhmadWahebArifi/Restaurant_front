@@ -7,19 +7,19 @@ const CustomerForm = ({ onCustomerAdded }) => {
   const PhoneInput = useRef();
   const AddressInput = useRef();
   const ctx = useContext(authContext);
-  
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const SubmitHandler = async (e) => {
     e.preventDefault();
-    
+
     // Check if user is logged in
     if (!ctx.isLogin) {
       setMessage("Please login first to add customers.");
       return;
     }
-    
+
     setLoading(true);
     setMessage("");
 
@@ -32,14 +32,14 @@ const CustomerForm = ({ onCustomerAdded }) => {
 
       // Make API call to save customer
       const response = await api.post("/api/customer", customerData);
-      
+
       if (response.status === 201 || response.status === 200) {
         setMessage("Customer added successfully!");
         // Clear form fields
         nameInput.current.value = "";
         PhoneInput.current.value = "";
         AddressInput.current.value = "";
-        
+
         // Notify parent component to refresh the table
         if (onCustomerAdded) {
           onCustomerAdded();
@@ -47,7 +47,7 @@ const CustomerForm = ({ onCustomerAdded }) => {
       } else {
         setMessage("Failed to add customer. Please try again.");
       }
-      
+
     } catch (error) {
       console.log("Error saving customer:", error.response?.data);
       console.log("Error status:", error.response?.status);
@@ -111,17 +111,16 @@ const CustomerForm = ({ onCustomerAdded }) => {
           />
         </div>
       </div>
-      
+
       {message && (
-        <div className={`px-5 py-2 rounded-lg ${
-          message.includes("successfully") 
-            ? "bg-green-100 text-green-800" 
+        <div className={`px-5 py-2 rounded-lg ${message.includes("successfully")
+            ? "bg-green-100 text-green-800"
             : "bg-red-100 text-red-800"
-        }`}>
+          }`}>
           {message}
         </div>
       )}
-      
+
       <button
         type="submit"
         disabled={loading}

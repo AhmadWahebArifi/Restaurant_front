@@ -9,6 +9,7 @@ import Report from "./pages/Delivery & Reports";
 import SettingsPage from "./pages/SettingsPage";
 import Customer from "./pages/Customer";
 import Table from "./pages/Table";
+import AddMenuItemForm from "./pages/AddMenuItemForm";
 function App() {
   return (
     <div className="flex h-screen bg-gray-900 text-gray-100 overflow-hidden">
@@ -20,6 +21,7 @@ function App() {
       <Sidebar />
       <Routes>
         <Route path="/" element={<OverviewPage />} />
+        <Route path="/create" element={<AddMenuItemForm />} />
         <Route path="/products" element={<Menu />} />
         <Route path="/customer" element={<Customer />} />
         <Route path="/table" element={<Table />} />
