@@ -11,29 +11,6 @@ const CustomerForm = ({ onCustomerAdded }) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-<<<<<<< HEAD
-  const SubmitHandler = () => {
-    // nameInput.current.value;
-    const url = editAble.isEdit
-      ? `http://127.0.0.1:8000/api/customer/edit/{editAble.editData.id}`
-      : "http://127.0.0.1:8000/api/customer";
-
-    axios
-      .post(
-        url,
-        {
-          name: nameInput.current.value,
-          phone: PhoneInput.current.value,
-          address: AddressInput.current.value,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-            "Content-Type": "applicatioin/json",
-            Accept: "application/json",
-          },
-=======
   const SubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -66,7 +43,6 @@ const CustomerForm = ({ onCustomerAdded }) => {
         // Notify parent component to refresh the table
         if (onCustomerAdded) {
           onCustomerAdded();
->>>>>>> 8fd6e9e84b230b3d56136c5a69e84c8ae411a748
         }
       } else {
         setMessage("Failed to add customer. Please try again.");
@@ -139,8 +115,8 @@ const CustomerForm = ({ onCustomerAdded }) => {
 
       {message && (
         <div className={`px-5 py-2 rounded-lg ${message.includes("successfully")
-            ? "bg-green-100 text-green-800"
-            : "bg-red-100 text-red-800"
+          ? "bg-green-100 text-green-800"
+          : "bg-red-100 text-red-800"
           }`}>
           {message}
         </div>

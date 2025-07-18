@@ -30,13 +30,13 @@ const CustomerTable = ({ refreshTrigger }) => {
     try {
       const response = await api.get("/api/customer");
       console.log("Customers data:", response.data);
-      
+
       // Handle different response structures
       let customerData = response.data;
       if (response.data && response.data.data) {
         customerData = response.data.data; // Handle nested data structure
       }
-      
+
       if (Array.isArray(customerData)) {
         setCustomers(customerData);
         setFilteredProducts(customerData);
@@ -63,12 +63,12 @@ const CustomerTable = ({ refreshTrigger }) => {
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    
+
     if (!Array.isArray(customers)) {
       setFilteredProducts([]);
       return;
     }
-    
+
     const filtered = customers.filter(
       (product) =>
         product.name.toLowerCase().includes(term) ||
@@ -78,16 +78,6 @@ const CustomerTable = ({ refreshTrigger }) => {
     setFilteredProducts(filtered);
   };
 
-<<<<<<< HEAD
-  const editHandler = (id) => {
-    //
-    const editData = "come from backend"; //
-    const editable = {
-      editData,
-      isEdit: false,
-    };
-  };
-=======
   // Update filtered products when customers data changes
   useEffect(() => {
     if (Array.isArray(customers)) {
@@ -110,8 +100,9 @@ const CustomerTable = ({ refreshTrigger }) => {
       </div>
     );
   }
+  const editHandler = () => {
 
->>>>>>> 8fd6e9e84b230b3d56136c5a69e84c8ae411a748
+  }
   return (
     <motion.div
       className="m-4 bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
