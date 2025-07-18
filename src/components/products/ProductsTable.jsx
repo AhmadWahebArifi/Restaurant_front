@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Edit, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const PRODUCT_DATA = [
   {
@@ -30,6 +31,8 @@ const PRODUCT_DATA = [
 ];
 
 const ProductsTable = () => {
+  const { t, i18n } = useTranslation();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(PRODUCT_DATA);
 
@@ -57,7 +60,7 @@ const ProductsTable = () => {
         <div className="relative">
           <input
             type="text"
-            placeholder="Search products..."
+            placeholder={t("search")}
             className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleSearch}
             value={searchTerm}
@@ -71,23 +74,23 @@ const ProductsTable = () => {
           <thead>
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Name
+                {t("name")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Description
+                {t("description")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                is_Available
+                {t("is_available")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Category_id
+                {t("category_id")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Price
+                {t("price")}
               </th>
 
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Actions
+                {t("action")}
               </th>
             </tr>
           </thead>

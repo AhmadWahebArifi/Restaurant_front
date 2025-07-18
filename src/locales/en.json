@@ -12,5 +12,17 @@
   "orders": "Orders",
   "report": "Delivery/Report",
   "setting": "Setting",
-  "totalorders": "total Orders"
+  "totalorders": "total Orders",
+  "totalrevenue": "Total Revenue",
+  "topselling": "Top Selling",
+  "category": "Category",
+  "name": "Name",
+  "description": "Description",
+  "price": "Price",
+  "add": "Add",
+  "adding": "Adding",
+  "search": "Search",
+  "is_available": "Is_Available",
+  "category_id": "Category_ID",
+  "action": "Action"
 }

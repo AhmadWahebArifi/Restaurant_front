@@ -15,7 +15,7 @@ const LoginSchema = Yup.object().shape({
   password_confirm: Yup.string()
     .min(6, "Password must be at least 6 ! ")
     .required("Password is required ! ")
-    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+    .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });
 
 const SignupForm = () => {
