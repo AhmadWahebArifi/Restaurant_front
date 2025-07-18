@@ -1,8 +1,11 @@
 import { useRef, useState, useContext } from "react";
 import api from "../../axios";
 import authContext from "../../store/auth-context";
+import { useTranslation } from "react-i18next";
 
 const CustomerForm = ({ onCustomerAdded }) => {
+  const [t] = useTranslation();
+
   const nameInput = useRef();
   const PhoneInput = useRef();
   const AddressInput = useRef();
@@ -66,7 +69,7 @@ const CustomerForm = ({ onCustomerAdded }) => {
             htmlFor="name"
             className="mb-2.5 block text-base font-medium text-dark dark:text-white"
           >
-            Name
+            {t("name")}
           </label>
           <input
             ref={nameInput}
@@ -83,7 +86,7 @@ const CustomerForm = ({ onCustomerAdded }) => {
             htmlFor="Phone"
             className="mb-2.5 block text-base font-medium text-dark dark:text-white"
           >
-            Phone
+            {t("phone")}
           </label>
           <input
             ref={PhoneInput}
@@ -99,7 +102,7 @@ const CustomerForm = ({ onCustomerAdded }) => {
             htmlFor="Address"
             className="mb-2.5 block text-base font-medium text-dark dark:text-white"
           >
-            Address
+            {t("address")}
           </label>
           <input
             ref={AddressInput}
@@ -149,7 +152,7 @@ const CustomerForm = ({ onCustomerAdded }) => {
             </defs>
           </svg>
         </span>
-        {loading ? "Adding..." : "Add Customer"}
+        {loading ? `${t("adding")}` : `${t("addcustomer")}`}
       </button>
     </form>
   );
