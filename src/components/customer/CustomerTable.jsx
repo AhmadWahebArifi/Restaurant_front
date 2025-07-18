@@ -78,6 +78,16 @@ const CustomerTable = ({ refreshTrigger }) => {
     setFilteredProducts(filtered);
   };
 
+<<<<<<< HEAD
+  const editHandler = (id) => {
+    //
+    const editData = "come from backend"; //
+    const editable = {
+      editData,
+      isEdit: false,
+    };
+  };
+=======
   // Update filtered products when customers data changes
   useEffect(() => {
     if (Array.isArray(customers)) {
@@ -101,6 +111,7 @@ const CustomerTable = ({ refreshTrigger }) => {
     );
   }
 
+>>>>>>> 8fd6e9e84b230b3d56136c5a69e84c8ae411a748
   return (
     <motion.div
       className="m-4 bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
@@ -167,7 +178,7 @@ const CustomerTable = ({ refreshTrigger }) => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                   <button className="text-indigo-400 hover:text-indigo-300 mr-2">
-                    <Edit size={18} />
+                    <Edit onClick={editHandler} size={18} />
                   </button>
                   <button className="text-red-400 hover:text-red-300">
                     <Trash2 size={18} />

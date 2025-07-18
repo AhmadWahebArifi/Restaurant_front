@@ -3,47 +3,46 @@ import {
   PieChart,
   Pie,
   Cell,
-  ResponsiveContainer,
   Tooltip,
+  ResponsiveContainer,
   Legend,
 } from "recharts";
 
-const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#0088FE"];
-
-const userDemographicsData = [
-  { name: "18-24", value: 20 },
-  { name: "25-34", value: 30 },
-  { name: "35-44", value: 25 },
-  { name: "45-54", value: 15 },
-  { name: "55+", value: 10 },
+const categoryData = [
+  { name: "Foods", value: 500 },
+  { name: "Desserts", value: 500 },
+  { name: "Drinks", value: 500 },
 ];
 
-const UserDemographicsChart = () => {
+const COLORS = ["#6366F1", "#8B5CF6", "#EC4899", "#10B981", "#F59E0B"];
+
+const CategoryDistributionChart = () => {
   return (
     <motion.div
-      className=" bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 lg:col-span-2"
+      className=" bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.5 }}
+      transition={{ delay: 0.3 }}
     >
-      <h2 className="text-xl font-semibold text-gray-100 mb-4">
-        User Demographics
+      <h2 className="text-lg font-medium mb-4 text-gray-100">
+        Category Distribution
       </h2>
-      <div style={{ width: "100%", height: 300 }}>
-        <ResponsiveContainer>
+      <div className="h-80">
+        <ResponsiveContainer width={"100%"} height={"100%"}>
           <PieChart>
             <Pie
-              data={userDemographicsData}
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
+              data={categoryData}
+              cx={"50%"}
+              cy={"50%"}
+              labelLine={false}
+              outerRadius={80}
               fill="#8884d8"
               dataKey="value"
               label={({ name, percent }) =>
                 `${name} ${(percent * 100).toFixed(0)}%`
               }
             >
-              {userDemographicsData.map((entry, index) => (
+              {categoryData.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
@@ -64,4 +63,4 @@ const UserDemographicsChart = () => {
     </motion.div>
   );
 };
-export default UserDemographicsChart;
+export default CategoryDistributionChart;

@@ -1,35 +1,25 @@
 import { motion } from "framer-motion";
-import { Edit, Search, Trash2 } from "lucide-react";
+import { Search } from "lucide-react";
 import { useState } from "react";
 
 const PRODUCT_DATA = [
   {
     id: 1,
-    name: "Qabli",
-    description: "Aghani Qablit Palaw",
-    category_id: 1,
-    is_available: "Exist",
-    price: 50,
+    order_id: 1,
+    payment_method: "cash",
+    payment_status: "succeeded",
+    amount: 30,
   },
   {
     id: 2,
-    name: "Cake",
-    description: "One of the best bevrage of all time.",
-    is_available: "Exist",
-    category_id: 2,
-    price: 10,
-  },
-  {
-    id: 3,
-    name: "Pepsi",
-    description: "best desserts of all time.",
-    is_available: "Exist",
-    category_id: 3,
-    price: 19.99,
+    order_id: 2,
+    payment_method: "credit card",
+    payment_status: "succeeded",
+    amount: 90,
   },
 ];
 
-const ProductsTable = () => {
+const PaymentTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(PRODUCT_DATA);
 
@@ -39,7 +29,7 @@ const ProductsTable = () => {
     const filtered = PRODUCT_DATA.filter(
       (product) =>
         product.name.toLowerCase().includes(term) ||
-        product.category.toLowerCase().includes(term)
+        product.phone.toLowerCase().includes(term)
     );
 
     setFilteredProducts(filtered);
@@ -47,17 +37,17 @@ const ProductsTable = () => {
 
   return (
     <motion.div
-      className=" bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
+      className="m-4 bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
     >
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-100">Menus</h2>
+        <h2 className="text-xl font-semibold text-gray-100">Payments</h2>
         <div className="relative">
           <input
             type="text"
-            placeholder="Search products..."
+            placeholder="Search customers..."
             className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleSearch}
             value={searchTerm}
@@ -71,23 +61,16 @@ const ProductsTable = () => {
           <thead>
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Name
+                Order_id
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Description
+                Paument_method
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                is_Available
+                Payment_status
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Category_id
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Price
-              </th>
-
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Actions
+                Amount
               </th>
             </tr>
           </thead>
@@ -106,32 +89,18 @@ const ProductsTable = () => {
                     alt="Product img"
                     className="size-10 rounded-full"
                   />
-                  {product.name}
+                  {product.order_id}
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  {product.description}
+                  {product.payment_method}
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  {product.is_available}
+                  {product.payment_status}
                 </td>
-
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  {product.category_id}
-                </td>
-
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  ${product.price.toFixed(2)}
-                </td>
-
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  <button className="text-indigo-400 hover:text-indigo-300 mr-2">
-                    <Edit size={18} />
-                  </button>
-                  <button className="text-red-400 hover:text-red-300">
-                    <Trash2 size={18} />
-                  </button>
+                  {product.amount}
                 </td>
               </motion.tr>
             ))}
@@ -141,4 +110,4 @@ const ProductsTable = () => {
     </motion.div>
   );
 };
-export default ProductsTable;
+export default PaymentTable;

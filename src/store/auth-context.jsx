@@ -15,10 +15,42 @@ export const AuthContextProvider = ({ children }) => {
   const [userErrorMessage, setUserErrorMessage] = useState();
 
   useEffect(() => {
+<<<<<<< HEAD
+    // const userInfo = localStorage.getItem("loggedIn");
+    // if (userInfo == 1) {
+    //   setIsLogin(true);
+    //   // localStorage.removeItem("ahmadarifi");
+
+    //   // const identifier = setTimeout(() => {
+    //   //   setIsLogin(true);
+    //   // }, 0);
+    //   // return () => {
+    //   //   clearTimeout(identifier);
+    //   // };
+    // }
+    axios
+      .get("http://127.0.0.1:8000/sanctum/csrf-cookie", {
+        withCredentials: true,
+      })
+      .then(() => {
+        // Now login or call protected routes
+        return axios.post(
+          "http://127.0.0.1:8000/api/login",
+          {
+            email: "ahmadarifi9wb@example.com",
+            password: "12345678",
+          },
+          {
+            withCredentials: true,
+          }
+        );
+      });
+=======
     const userInfo = localStorage.getItem("loggedIn");
     if (userInfo == 1) {
       setIsLogin(true);
     }
+>>>>>>> 8fd6e9e84b230b3d56136c5a69e84c8ae411a748
   }, []);
 
   const onLoginHandler = (email, password) => {

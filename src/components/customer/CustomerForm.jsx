@@ -11,6 +11,29 @@ const CustomerForm = ({ onCustomerAdded }) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+<<<<<<< HEAD
+  const SubmitHandler = () => {
+    // nameInput.current.value;
+    const url = editAble.isEdit
+      ? `http://127.0.0.1:8000/api/customer/edit/{editAble.editData.id}`
+      : "http://127.0.0.1:8000/api/customer";
+
+    axios
+      .post(
+        url,
+        {
+          name: nameInput.current.value,
+          phone: PhoneInput.current.value,
+          address: AddressInput.current.value,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+            "Content-Type": "applicatioin/json",
+            Accept: "application/json",
+          },
+=======
   const SubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -43,6 +66,7 @@ const CustomerForm = ({ onCustomerAdded }) => {
         // Notify parent component to refresh the table
         if (onCustomerAdded) {
           onCustomerAdded();
+>>>>>>> 8fd6e9e84b230b3d56136c5a69e84c8ae411a748
         }
       } else {
         setMessage("Failed to add customer. Please try again.");
@@ -72,6 +96,7 @@ const CustomerForm = ({ onCustomerAdded }) => {
           <input
             ref={nameInput}
             type="text"
+            // value = {editable.isEdit ? editable.editData.name : ""}
             name="name"
             placeholder="Enter full name"
             className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"

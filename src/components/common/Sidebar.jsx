@@ -45,7 +45,7 @@ const Sidebar = () => {
     { name: cus, icon: UserCircle, color: "#6EE7B7", href: "/customer" },
     { name: tab, icon: LayoutGrid, color: "#6EE7B7", href: "/table" },
     { name: use, icon: Users, color: "#EC4899", href: "/users" },
-    { name: pay, icon: DollarSign, color: "#10B981", href: "/sales" },
+    { name: pay, icon: DollarSign, color: "#10B981", href: "/payment" },
     { name: ord, icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
     {
       name: rep,
