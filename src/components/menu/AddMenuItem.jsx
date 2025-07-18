@@ -13,7 +13,7 @@ const AddMenuItem = () => {
     const [message, setMessage] = useState("");
 
     const [categories, setCategories] = useState([]);
-
+    // ****************************************************
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -27,7 +27,7 @@ const AddMenuItem = () => {
         fetchCategories();
     }, []);
 
-    console.log(categories);
+    // **********************************************
     const SubmitHandler = async (e) => {
         e.preventDefault();
 
@@ -41,14 +41,15 @@ const AddMenuItem = () => {
         setMessage("");
 
         try {
-            const customerData = {
+            const menuItems = {
                 name: nameInput.current.value,
                 description: descriptionInput.current.value,
-                Price: PriceInput.current.value,
+                price: PriceInput.current.value,
+                category: categoryInput.current.value
             };
-
+            console.log(menuItems)
             // Make API call to save customer
-            const response = await api.post("/api/customer", customerData);
+            const response = await api.post("/api/menu-item", menuItems);
 
             if (response.status === 201 || response.status === 200) {
                 setMessage("Customer added successfully!");
@@ -56,11 +57,12 @@ const AddMenuItem = () => {
                 nameInput.current.value = "";
                 descriptionInput.current.value = "";
                 PriceInput.current.value = "";
+                categoryInput.current.value = "";
 
-                // Notify parent component to refresh the table
-                if (onCustomerAdded) {
-                    onCustomerAdded();
-                }
+                // // Notify parent component to refresh the table
+                // if (onCustomerAdded) {
+                //     onCustomerAdded();
+                // }
             } else {
                 setMessage("Failed to add customer. Please try again.");
             }

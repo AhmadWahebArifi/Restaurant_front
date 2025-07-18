@@ -31,6 +31,7 @@ const CustomerTable = ({ refreshTrigger }) => {
       const response = await api.get("/api/customer");
       console.log("Customers data:", response.data);
 
+
       // Handle different response structures
       let customerData = response.data;
       if (response.data && response.data.data) {
