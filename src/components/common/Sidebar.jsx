@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 const Sidebar = () => {
   const { t, i18n } = useTranslation();
   const ov = t("overview");
+  const add_menu = t("add menu");
   const mu = t("menu");
   const cus = t("customer");
   const tab = t("table");
@@ -34,6 +35,7 @@ const Sidebar = () => {
       color: "#6366f1",
       href: "/",
     },
+    { name: add_menu, icon: ShoppingBag, color: "#6EE7B7", href: "/create" },
     {
       name: mu,
       icon: ShoppingBag,
@@ -57,9 +59,8 @@ const Sidebar = () => {
 
   return (
     <motion.div
-      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
-        isSidebarOpen ? "w-64" : "w-20"
-      }`}
+      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${isSidebarOpen ? "w-64" : "w-20"
+        }`}
       animate={{ width: isSidebarOpen ? 256 : 80 }}
     >
       <div className="h-full bg-blue-950 bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-gray-700">
