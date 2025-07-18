@@ -4,9 +4,9 @@ import { authAPI } from "../axios";
 
 const authContext = React.createContext({
   isLogin: false,
-  onLogout: () => { },
-  onLogin: (name, password) => { },
-  onSignup: (username, email, password) => { },
+  onLogout: () => {},
+  onLogin: (name, password) => {},
+  onSignup: (username, email, password) => {},
 });
 
 export const AuthContextProvider = ({ children }) => {
@@ -15,46 +15,15 @@ export const AuthContextProvider = ({ children }) => {
   const [userErrorMessage, setUserErrorMessage] = useState();
 
   useEffect(() => {
-<<<<<<< HEAD
-    // const userInfo = localStorage.getItem("loggedIn");
-    // if (userInfo == 1) {
-    //   setIsLogin(true);
-    //   // localStorage.removeItem("ahmadarifi");
-
-    //   // const identifier = setTimeout(() => {
-    //   //   setIsLogin(true);
-    //   // }, 0);
-    //   // return () => {
-    //   //   clearTimeout(identifier);
-    //   // };
-    // }
-    axios
-      .get("http://127.0.0.1:8000/sanctum/csrf-cookie", {
-        withCredentials: true,
-      })
-      .then(() => {
-        // Now login or call protected routes
-        return axios.post(
-          "http://127.0.0.1:8000/api/login",
-          {
-            email: "ahmadarifi9wb@example.com",
-            password: "12345678",
-          },
-          {
-            withCredentials: true,
-          }
-        );
-      });
-=======
     const userInfo = localStorage.getItem("loggedIn");
     if (userInfo == 1) {
       setIsLogin(true);
     }
->>>>>>> 8fd6e9e84b230b3d56136c5a69e84c8ae411a748
   }, []);
 
   const onLoginHandler = (email, password) => {
-    authAPI.login(email, password)
+    authAPI
+      .login(email, password)
       .then((response) => {
         console.log(response.data);
 
@@ -76,7 +45,8 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const onLogoutHandler = () => {
-    authAPI.logout()
+    authAPI
+      .logout()
       .then(() => {
         setIsLogin(false);
         localStorage.removeItem("loggedIn");
@@ -92,7 +62,12 @@ export const AuthContextProvider = ({ children }) => {
       });
   };
 
-  const onSignInHandler = (username, email, password, password_confirmation) => {
+  const onSignInHandler = (
+    username,
+    email,
+    password,
+    password_confirmation
+  ) => {
     const userData = {
       name: username,
       email: email,
@@ -100,7 +75,8 @@ export const AuthContextProvider = ({ children }) => {
       password_confirmation: password_confirmation,
     };
 
-    authAPI.register(userData)
+    authAPI
+      .register(userData)
       .then((response) => {
         console.log("Register success:", response.data.token);
         localStorage.setItem("auth-token", response.data.token);
@@ -110,7 +86,9 @@ export const AuthContextProvider = ({ children }) => {
       })
       .catch((error) => {
         console.log("Register error:", error.response?.data || error.message);
-        setUserErrorMessage(error.response?.data?.message || "Registration failed");
+        setUserErrorMessage(
+          error.response?.data?.message || "Registration failed"
+        );
       });
   };
 

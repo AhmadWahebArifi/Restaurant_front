@@ -12,7 +12,7 @@ const PRODUCT_DATA = [
   },
   {
     id: 2,
-    name: "Ozair kooni",
+    name: "Ozair",
     phone: "0723129291",
     address: "kabul",
   },
@@ -30,13 +30,13 @@ const CustomerTable = ({ refreshTrigger }) => {
     try {
       const response = await api.get("/api/customer");
       console.log("Customers data:", response.data);
-      
+
       // Handle different response structures
       let customerData = response.data;
       if (response.data && response.data.data) {
         customerData = response.data.data; // Handle nested data structure
       }
-      
+
       if (Array.isArray(customerData)) {
         setCustomers(customerData);
         setFilteredProducts(customerData);
@@ -63,12 +63,12 @@ const CustomerTable = ({ refreshTrigger }) => {
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    
+
     if (!Array.isArray(customers)) {
       setFilteredProducts([]);
       return;
     }
-    
+
     const filtered = customers.filter(
       (product) =>
         product.name.toLowerCase().includes(term) ||
@@ -78,16 +78,6 @@ const CustomerTable = ({ refreshTrigger }) => {
     setFilteredProducts(filtered);
   };
 
-<<<<<<< HEAD
-  const editHandler = (id) => {
-    //
-    const editData = "come from backend"; //
-    const editable = {
-      editData,
-      isEdit: false,
-    };
-  };
-=======
   // Update filtered products when customers data changes
   useEffect(() => {
     if (Array.isArray(customers)) {
@@ -111,7 +101,6 @@ const CustomerTable = ({ refreshTrigger }) => {
     );
   }
 
->>>>>>> 8fd6e9e84b230b3d56136c5a69e84c8ae411a748
   return (
     <motion.div
       className="m-4 bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
@@ -178,7 +167,7 @@ const CustomerTable = ({ refreshTrigger }) => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                   <button className="text-indigo-400 hover:text-indigo-300 mr-2">
-                    <Edit onClick={editHandler} size={18} />
+                    <Edit size={18} />
                   </button>
                   <button className="text-red-400 hover:text-red-300">
                     <Trash2 size={18} />
