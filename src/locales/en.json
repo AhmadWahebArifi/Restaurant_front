@@ -11,5 +11,6 @@
   "payments": "Payments",
   "orders": "Orders",
   "report": "Delivery/Report",
-  "setting": "Setting"
+  "setting": "Setting",
+  "totalorders": "total Orders"
 }

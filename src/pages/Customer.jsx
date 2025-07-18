@@ -5,6 +5,7 @@ import CustomerForm from "../components/customer/CustomerForm";
 import Header from "../components/common/Header";
 import StatCard from "../components/common/StatCard";
 import CustomerTable from "../components/customer/CustomerTable";
+import SuccessCard from "../components/common/SuccessCard";
 
 const userStats = {
   totalUsers: 152845,
@@ -13,13 +14,19 @@ const userStats = {
   churnRate: "2.4%",
 };
 
+// {showSuccess && <SuccessCard onClose={() => setShowSuccess(false)} />}
 const Customer = () => {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleCustomerAdded = useCallback(() => {
-    setRefreshTrigger(prev => prev + 1);
+    setRefreshTrigger((prev) => prev + 1);
+    setShowSuccess(true);
   }, []);
 
+  {
+    showSuccess && <SuccessCard onClose={() => setShowSuccess(false)} />;
+  }
   return (
     <div className="flex-1 overflow-auto relative z-10">
       <Header title="Customer" />

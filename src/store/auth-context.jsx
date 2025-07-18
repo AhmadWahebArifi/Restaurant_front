@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { authAPI } from "../axios";
+import axios from "axios";
 
 const authContext = React.createContext({
   isLogin: false,
@@ -22,7 +23,8 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   const onLoginHandler = (email, password) => {
-    authAPI.login(email, password)
+    authAPI
+      .login(email, password)
       .then((response) => {
         console.log(response.data);
 
@@ -44,7 +46,8 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const onLogoutHandler = () => {
-    authAPI.logout()
+    authAPI
+      .logout()
       .then(() => {
         setIsLogin(false);
         localStorage.removeItem("loggedIn");
@@ -60,7 +63,12 @@ export const AuthContextProvider = ({ children }) => {
       });
   };
 
-  const onSignInHandler = (username, email, password, password_confirmation) => {
+  const onSignInHandler = (
+    username,
+    email,
+    password,
+    password_confirmation
+  ) => {
     const userData = {
       name: username,
       email: email,
@@ -68,7 +76,8 @@ export const AuthContextProvider = ({ children }) => {
       password_confirmation: password_confirmation,
     };
 
-    authAPI.register(userData)
+    authAPI
+      .register(userData)
       .then((response) => {
         console.log("Register success:", response.data.token);
         localStorage.setItem("auth-token", response.data.token);
@@ -78,7 +87,9 @@ export const AuthContextProvider = ({ children }) => {
       })
       .catch((error) => {
         console.log("Register error:", error.response?.data || error.message);
-        setUserErrorMessage(error.response?.data?.message || "Registration failed");
+        setUserErrorMessage(
+          error.response?.data?.message || "Registration failed"
+        );
       });
   };
 

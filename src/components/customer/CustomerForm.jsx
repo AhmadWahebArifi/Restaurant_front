@@ -47,7 +47,6 @@ const CustomerForm = ({ onCustomerAdded }) => {
       } else {
         setMessage("Failed to add customer. Please try again.");
       }
-
     } catch (error) {
       console.log("Error saving customer:", error.response?.data);
       console.log("Error status:", error.response?.status);
@@ -57,6 +56,9 @@ const CustomerForm = ({ onCustomerAdded }) => {
     } finally {
       setLoading(false);
     }
+  };
+  const editHandler = (id) => {
+    console.log('Edit incoming'); // or combine both logs
   };
 
   return (
@@ -72,7 +74,6 @@ const CustomerForm = ({ onCustomerAdded }) => {
           <input
             ref={nameInput}
             type="text"
-            // value = {editable.isEdit ? editable.editData.name : ""}
             name="name"
             placeholder="Enter full name"
             className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
@@ -114,10 +115,12 @@ const CustomerForm = ({ onCustomerAdded }) => {
       </div>
 
       {message && (
-        <div className={`px-5 py-2 rounded-lg ${message.includes("successfully")
-          ? "bg-green-100 text-green-800"
-          : "bg-red-100 text-red-800"
-          }`}>
+        <div
+          className={`px-5 py-2 rounded-lg ${message.includes("successfully")
+            ? "bg-green-100 text-green-800"
+            : "bg-red-100 text-red-800"
+            }`}
+        >
           {message}
         </div>
       )}
