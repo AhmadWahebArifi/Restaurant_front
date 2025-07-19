@@ -1,11 +1,14 @@
 import { useContext } from "react";
 import authContext from "../../store/auth-context";
+import { useNavigate } from "react-router-dom";
 
 const Logout = () => {
+  const navigate = useNavigate();
   const ctx = useContext(authContext);
 
   const handleLogout = () => {
     ctx.onLogout && ctx.onLogout();
+    navigate("/");
   };
 
   return (

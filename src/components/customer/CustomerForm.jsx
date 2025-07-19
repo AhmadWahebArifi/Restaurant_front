@@ -33,12 +33,12 @@ const CustomerForm = ({ onCustomerAdded, customerToEdit, onUpdateDone }) => {
     e.preventDefault();
 
     if (!ctx.isLogin) {
-      setMessage("Please login first.");
+      setError("Please login first to add customers.");
       return;
     }
 
     setLoading(true);
-    setMessage("");
+    setError("");
 
     const customerData = {
       name: nameInput.current.value,
@@ -70,8 +70,11 @@ const CustomerForm = ({ onCustomerAdded, customerToEdit, onUpdateDone }) => {
         }
       }
     } catch (error) {
-      console.error("Error saving customer:", error);
-      setMessage("An error occurred. Please try again.");
+      console.log("Error saving customer:", error.response?.data);
+      console.log("Error status:", error.response?.status);
+      console.log("Error headers:", error.response?.headers);
+      console.log("Full error:", error);
+      setMessage("Failed to add customer. Please try again.");
     } finally {
       setLoading(false);
     }

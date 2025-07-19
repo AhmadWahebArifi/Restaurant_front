@@ -27,13 +27,17 @@ const Customer = () => {
     setShowSuccess(true);
   }, []);
 
-  {
-    showSuccess && <SuccessCard onClose={() => setShowSuccess(false)} />;
-  }
   return (
     <div className="flex-1 overflow-auto relative z-10">
       <Header title={t("customer")} />
-
+      {showSuccess && (
+        <SuccessCard
+          message="Customer added successfully!"
+          duration={2000}
+          inPage={true}
+          onClose={() => setShowSuccess(false)}
+        />
+      )}
       <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
         {/* STATS */}
         <motion.div

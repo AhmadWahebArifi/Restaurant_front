@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Search, Eye } from "lucide-react";
 
-const orderData = [
+const OrderTable = [
   {
     id: "ORD001",
     customer: "John Doe",
@@ -63,12 +63,12 @@ const orderData = [
 
 const OrdersTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredOrders, setFilteredOrders] = useState(orderData);
+  const [filteredOrders, setFilteredOrders] = useState(OrderTable);
 
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = orderData.filter(
+    const filtered = OrderTable.filter(
       (order) =>
         order.id.toLowerCase().includes(term) ||
         order.customer.toLowerCase().includes(term)
@@ -141,15 +141,14 @@ const OrdersTable = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                   <span
-                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      order.status === "Delivered"
-                        ? "bg-green-100 text-green-800"
-                        : order.status === "Processing"
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${order.status === "Delivered"
+                      ? "bg-green-100 text-green-800"
+                      : order.status === "Processing"
                         ? "bg-yellow-100 text-yellow-800"
                         : order.status === "Shipped"
-                        ? "bg-blue-100 text-blue-800"
-                        : "bg-red-100 text-red-800"
-                    }`}
+                          ? "bg-blue-100 text-blue-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
                   >
                     {order.status}
                   </span>

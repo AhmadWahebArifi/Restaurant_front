@@ -19,17 +19,22 @@ const ProductsPage = () => {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleCustomerAdded = useCallback(() => {
+  const handleMenuItemAdded = useCallback(() => {
     setRefreshTrigger((prev) => prev + 1);
     setShowSuccess(true);
   }, []);
-  {
-    showSuccess && <SuccessCard onClose={() => setShowSuccess(false)} />;
-  }
+
   return (
     <div className="flex-1 overflow-auto relative z-10">
       <Header title={me} />
-
+      {showSuccess && (
+        <SuccessCard
+          message="Menu item added successfully!"
+          duration={2000}
+          inPage={true}
+          onClose={() => setShowSuccess(false)}
+        />
+      )}
       <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
         {/* STATS */}
         <motion.div
@@ -48,9 +53,8 @@ const ProductsPage = () => {
           />
         </motion.div>
         {/* <MenuForm /> */}
-        <AddMenuItem onCustomerAdded={handleCustomerAdded} />
+        <AddMenuItem onCustomerAdded={handleMenuItemAdded} />
         <ProductsTable refreshTrigger={refreshTrigger} />
-
         {/* CHARTS */}
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
           {/* <SalesTrendChart /> */}
