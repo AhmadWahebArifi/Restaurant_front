@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import authContext from "../../store/auth-context";
 import App from "../../App";
 import Signup from "./Signup";

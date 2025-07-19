@@ -5,9 +5,9 @@ import axios from "axios";
 
 const authContext = React.createContext({
   isLogin: false,
-  onLogout: () => { },
-  onLogin: (name, password) => { },
-  onSignup: (username, email, password) => { },
+  onLogout: () => {},
+  onLogin: (name, password) => {},
+  onSignup: (username, email, password) => {},
 });
 
 export const AuthContextProvider = ({ children }) => {
