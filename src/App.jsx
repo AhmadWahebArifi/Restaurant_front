@@ -12,6 +12,8 @@ import Payment from "./pages/Payment";
 import AddOrder from "./pages/AddOrder";
 import authContext from "./store/auth-context";
 import { useContext, useEffect } from "react";
+import Revenue from "./components/payment/Revenue";
+import RevenueReport from "./pages/RevenueReport";
 
 function App() {
   const ctx = useContext(authContext);
@@ -66,6 +68,7 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/add_orders" element={<AddOrder />} />
         <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/revenue" element={<RevenueReport />} />
         {/* <Route path="/analytics" element={<Report />} /> */}
         <Route path="/settings" element={<SettingsPage />} />
       </Routes>
