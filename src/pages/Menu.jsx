@@ -18,10 +18,20 @@ const ProductsPage = () => {
   const re = t("totalrevenue");
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [editingMenuItem, setEditingMenuItem] = useState(null);
 
   const handleMenuItemAdded = useCallback(() => {
     setRefreshTrigger((prev) => prev + 1);
     setShowSuccess(true);
+    setEditingMenuItem(null); // Clear editing state after successful operation
+  }, []);
+
+  const handleEditMenuItem = useCallback((menuItem) => {
+    setEditingMenuItem(menuItem);
+  }, []);
+
+  const handleCancelEdit = useCallback(() => {
+    setEditingMenuItem(null);
   }, []);
 
   return (
@@ -53,8 +63,15 @@ const ProductsPage = () => {
           />
         </motion.div>
         {/* <MenuForm /> */}
-        <AddMenuItem onCustomerAdded={handleMenuItemAdded} />
-        <ProductsTable refreshTrigger={refreshTrigger} />
+        <AddMenuItem 
+          onCustomerAdded={handleMenuItemAdded} 
+          editingMenuItem={editingMenuItem}
+          onCancelEdit={handleCancelEdit}
+        />
+        <ProductsTable 
+          refreshTrigger={refreshTrigger} 
+          onEditMenuItem={handleEditMenuItem}
+        />
         {/* CHARTS */}
         <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
           {/* <SalesTrendChart /> */}

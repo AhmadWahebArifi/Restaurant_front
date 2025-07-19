@@ -26,10 +26,12 @@ const SuccessCard = ({
     <div
       className={`$ {
         inPage
-          ? "w-full max-w-2xl mx-auto mt-4"
+          ? "w-full max-w-2xl mr-0 mt-4"
           : "fixed top-8 left-1/2 z-50 transform -translate-x-1/2"
       } transition-all duration-500 ${
-        show ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"
+        show
+          ? "opacity-100 scale-100"
+          : "opacity-0 scale-90 pointer-events-none"
       }`}
     >
       <div className="flex items-center gap-2 rounded-md bg-green-100 px-4 py-2 shadow text-green-900 text-sm font-medium animate-bounce-in relative">
@@ -51,7 +53,10 @@ const SuccessCard = ({
         <div className="absolute left-0 bottom-0 w-full h-0.5 bg-green-200 rounded-b overflow-hidden">
           <div
             className="h-full bg-green-400 transition-all duration-[2000ms]"
-            style={{ width: `${progress}%`, transitionDuration: `${duration}ms` }}
+            style={{
+              width: `${progress}%`,
+              transitionDuration: `${duration}ms`,
+            }}
           ></div>
         </div>
       </div>

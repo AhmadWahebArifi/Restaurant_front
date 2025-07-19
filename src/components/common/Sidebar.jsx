@@ -20,13 +20,12 @@ const Sidebar = () => {
   const { t, i18n } = useTranslation();
   const ov = t("overview");
   const mu = t("menu");
-  const add_order = t("Add Order");
+  const add_order = t("addorders");
   const cus = t("customer");
   const tab = t("table");
   const use = t("users");
   const pay = t("payments");
   const ord = t("orders");
-  const rep = t("report");
   const st = t("setting");
 
   const SIDEBAR_ITEMS = [
@@ -46,14 +45,13 @@ const Sidebar = () => {
     { name: tab, icon: LayoutGrid, color: "#6EE7B7", href: "/table" },
     { name: use, icon: Users, color: "#EC4899", href: "/users" },
     { name: pay, icon: DollarSign, color: "#10B981", href: "/payment" },
-    { name: add_order, icon: ShoppingCart, color: "#F59E0B", href: "/add_orders" },
-    { name: ord, icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
     {
-      name: rep,
-      icon: TrendingUp,
-      color: "#3B82F6",
-      href: "/analytics",
+      name: t("addorders"),
+      icon: ShoppingCart,
+      color: "#F59E0B",
+      href: "/add_orders",
     },
+    { name: ord, icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
     { name: st, icon: Settings, color: "#6EE7B7", href: "/settings" },
   ];
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -61,8 +59,9 @@ const Sidebar = () => {
 
   return (
     <motion.div
-      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${isSidebarOpen ? "w-64" : "w-20"
-        }`}
+      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
+        isSidebarOpen ? "w-64" : "w-20"
+      }`}
       animate={{ width: isSidebarOpen ? 256 : 80 }}
     >
       <div className="h-full bg-blue-950 bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-gray-700">

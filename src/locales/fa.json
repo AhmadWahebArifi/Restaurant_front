@@ -43,5 +43,22 @@
   "pendingorders": "سفارش در حال پروسس",
   "completeorders": "سفارش تکمیل شده",
   "choosealanguage": " زبان دلخواه خویش را انتحاب کنین ",
-  "Language": "زبان"
+  "Language": "زبان",
+  "selectcustomer": "انتخاب مشتری",
+  "customername": "نام مشتری",
+  "tablenumber": "نمبر میز",
+  "entertablenumber": "وارد کردن نمبر میز",
+  "orderstatus": "وضعیت سفارش",
+  "selectorderstatus": "انتخاب وضعیت سفارش",
+  "pending": "در جریان",
+  "preparing": "در حال آماده",
+  "served": "رسیده",
+  "completed": "تکمیل شده",
+  "drinks": "نوشابه باب",
+  "selectdrinks": "انتخاب نوشابه باب",
+  "deserts": "شیرینی باب",
+  "selectdeserts": "انتخاب شیرینی باب",
+  "foods": "غذا ها",
+  "selectfoods": "انتخاب غذا ها",
+  "addorders": "اضافه کردن سفارشات"
 }
