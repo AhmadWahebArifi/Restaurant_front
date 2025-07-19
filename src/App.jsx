@@ -59,19 +59,21 @@ function App() {
       </div>
 
       <Sidebar />
-      <Routes>
-        <Route path="/" element={<OverviewPage />} />
-        <Route path="/products" element={<Menu />} />
-        <Route path="/customer" element={<Customer />} />
-        <Route path="/table" element={<Table />} />
-        <Route path="/users" element={<UsersPage />} />
-        <Route path="/payment" element={<Payment />} />
-        <Route path="/add_orders" element={<AddOrder />} />
-        <Route path="/orders" element={<OrdersPage />} />
-        <Route path="/revenue" element={<RevenueReport />} />
-        {/* <Route path="/analytics" element={<Report />} /> */}
-        <Route path="/settings" element={<SettingsPage />} />
-      </Routes>
+      <div className="flex-1">
+        <Routes>
+          <Route path="/" element={<OverviewPage />} />
+          <Route path="/products" element={<Menu />} />
+          <Route path="/customer" element={<Customer />} />
+          <Route path="/table" element={<Table />} />
+          <Route path="/users" element={<UsersPage />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/add_orders" element={<AddOrder />} />
+          <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/revenue" element={<RevenueReport />} />
+          {/* <Route path="/analytics" element={<Report />} /> */}
+          <Route path="/settings" element={<SettingsPage />} />
+        </Routes>
+      </div>
     </div>
   );
 }

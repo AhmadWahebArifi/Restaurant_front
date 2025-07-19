@@ -89,7 +89,7 @@ const Sidebar = () => {
           <Menu size={24} />
         </motion.button>
 
-        <nav className="mt-8 flex-grow">
+        <nav className="mt-8 flex-grow overflow-x-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
           {SIDEBAR_ITEMS.map((item) => (
             <Link
               key={item.href}
