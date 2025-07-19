@@ -68,22 +68,29 @@ const PaymentTable = () => {
       }
       console.log(data.order_status);
       await api.post(`/api/payment`, data);
-      // Update local state with new values
-      console.log("ok");
-      setOrders((prev) =>
-        prev.map((o) =>
-          o.id === selectedPayment.id
-            ? { ...o, status: status, payment_method: paymentMethod }
-            : o
-        )
-      );
-      setFilteredOrders((prev) =>
-        prev.map((o) =>
-          o.id === selectedPayment.id
-            ? { ...o, status: status, payment_method: paymentMethod }
-            : o
-        )
-      );
+      
+      // If status is changed to "Completed", remove the order from the table
+      if (status === "Completed") {
+        setOrders((prev) => prev.filter((o) => o.id !== selectedPayment.id));
+        setFilteredOrders((prev) => prev.filter((o) => o.id !== selectedPayment.id));
+      } else {
+        // Otherwise, just update the status
+        setOrders((prev) =>
+          prev.map((o) =>
+            o.id === selectedPayment.id
+              ? { ...o, status: status, payment_method: paymentMethod }
+              : o
+          )
+        );
+        setFilteredOrders((prev) =>
+          prev.map((o) =>
+            o.id === selectedPayment.id
+              ? { ...o, status: status, payment_method: paymentMethod }
+              : o
+          )
+        );
+      }
+      
       closeModal();
     } catch (error) {
       console.error("Error updating payment:", error);
@@ -164,7 +171,15 @@ const PaymentTable = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                     {product.total}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  <td  className={`px-6 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        product.status === "Completed"
+                          ? "bg-green-100 text-green-800"
+                          : product.status === "Preparing"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : product.status === "Pending"
+                          ? "bg-red-100 text-red-800"
+                          : "bg-blue-100 text-blue-800" // Served
+                      }`}>
                     {product.status}
                   </td>
 

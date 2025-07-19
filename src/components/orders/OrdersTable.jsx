@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 const OrderTable = [];
 
-const OrdersTable = () => {
+const OrdersTable = ({ onOrderServed }) => {
   const [t] = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
@@ -103,6 +103,7 @@ const OrdersTable = () => {
       if (newStatus === "Served") {
         setOrders((prev) => prev.filter((o) => o.id !== selectedOrder.id));
         setFilteredOrders((prev) => prev.filter((o) => o.id !== selectedOrder.id));
+        onOrderServed(); // Notify parent
       } else {
         // Otherwise, just update the status
         setOrders((prev) =>
