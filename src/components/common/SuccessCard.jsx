@@ -34,7 +34,7 @@ const SuccessCard = ({
           : "opacity-0 scale-90 pointer-events-none"
       }`}
     >
-      <div className="flex items-center gap-2 rounded-md bg-green-100 px-4 py-2 shadow text-green-900 text-sm font-medium animate-bounce-in relative">
+      <div className="flex items-center gap-2 rounded-md bg-green-700 px-4 py-2 shadow text-green-900 text-sm font-medium animate-bounce-in relative">
         <svg
           className="w-4 h-4 text-green-600"
           fill="none"
@@ -52,7 +52,7 @@ const SuccessCard = ({
         {/* Progress bar at the bottom */}
         <div className="absolute left-0 bottom-0 w-full h-0.5 bg-green-200 rounded-b overflow-hidden">
           <div
-            className="h-full bg-green-400 transition-all duration-[2000ms]"
+            className="h-full bg-green-700 transition-all duration-[2000ms]"
             style={{
               width: `${progress}%`,
               transitionDuration: `${duration}ms`,
