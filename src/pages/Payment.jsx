@@ -6,6 +6,7 @@ import { DollarSign, ShoppingCart, TrendingUp } from "lucide-react";
 import SalesOverviewChart from "../components/sales/SalesOverviewChart";
 import PaymentTable from "../components/payment/PaymentTable";
 import { useTranslation } from "react-i18next";
+import PaymentForm from "../components/payment/PaymentForm";
 
 const salesStats = {
   totalRevenue: "$1034",
@@ -32,6 +33,7 @@ const Payment = () => {
           />
         </motion.div>
 
+        {/* <PaymentForm /> */}
         <PaymentTable />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8"></div>
