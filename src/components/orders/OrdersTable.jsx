@@ -55,7 +55,7 @@ const OrdersTable = () => {
 
   const updateStatus = async () => {
     try {
-      await api.put(`/order/update-status/${selectedOrder.id}`, { order_status: newStatus });
+      await api.put(`api/order/update-status/${selectedOrder.id}`, { order_status: newStatus });
       setOrders((prev) =>
         prev.map((o) =>
           o.id === selectedOrder.id ? { ...o, status: newStatus } : o
