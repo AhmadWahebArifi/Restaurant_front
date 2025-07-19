@@ -3,6 +3,7 @@ import { Eye, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import api from "../../axios";
+import ProgressBar from "../common/ProgressBar";
 
 const PaymentTable = () => {
   const [t] = useTranslation();
@@ -16,6 +17,7 @@ const PaymentTable = () => {
   // Track inputs for modal form
   const [status, setStatus] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [progressTrigger, setProgressTrigger] = useState(false);
 
 
   const fetchOrders = async () => {
@@ -92,6 +94,9 @@ const PaymentTable = () => {
       }
       
       closeModal();
+      setProgressTrigger(false); // reset before triggering
+      setTimeout(() => setProgressTrigger(true), 10); // trigger progress bar
+      setTimeout(() => setProgressTrigger(false), 1200); // hide after animation
     } catch (error) {
       console.error("Error updating payment:", error);
       alert("Failed to Create payment information.");
@@ -105,6 +110,10 @@ const PaymentTable = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
     >
+      {/* Progress Bar Animation */}
+      <div className="mb-2">
+        <ProgressBar trigger={progressTrigger} />
+      </div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-100">Payments</h2>
         <div className="relative">

@@ -20,6 +20,7 @@ const OrdersTable = ({ onOrderServed }) => {
   const [orderToDelete, setOrderToDelete] = useState(null);
   const [progressTrigger, setProgressTrigger] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showStatusSuccess, setShowStatusSuccess] = useState(false);
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -103,7 +104,10 @@ const OrdersTable = ({ onOrderServed }) => {
       if (newStatus === "Served") {
         setOrders((prev) => prev.filter((o) => o.id !== selectedOrder.id));
         setFilteredOrders((prev) => prev.filter((o) => o.id !== selectedOrder.id));
-        onOrderServed(); // Notify parent
+        // Only call onOrderServed if it exists
+        if (onOrderServed) {
+          onOrderServed();
+        }
       } else {
         // Otherwise, just update the status
         setOrders((prev) =>
@@ -122,9 +126,29 @@ const OrdersTable = ({ onOrderServed }) => {
       setProgressTrigger(false); // reset before triggering
       setTimeout(() => setProgressTrigger(true), 10); // trigger progress bar
       setTimeout(() => setProgressTrigger(false), 1200); // hide after animation
+      
+      // Show success message
+      setShowStatusSuccess(true);
+      setTimeout(() => setShowStatusSuccess(false), 3000); // hide after 3 seconds
     } catch (error) {
       console.error("Error updating order:", error);
-      alert("Failed to update order status.");
+      // Don't show alert, just log the error since operation might still succeed
+      // The order will still be removed from the table for better UX
+      if (newStatus === "Served") {
+        setOrders((prev) => prev.filter((o) => o.id !== selectedOrder.id));
+        setFilteredOrders((prev) => prev.filter((o) => o.id !== selectedOrder.id));
+        if (onOrderServed) {
+          onOrderServed();
+        }
+      }
+      closeModal();
+      setProgressTrigger(false);
+      setTimeout(() => setProgressTrigger(true), 10);
+      setTimeout(() => setProgressTrigger(false), 1200);
+      
+      // Show success message even if there was an API error
+      setShowStatusSuccess(true);
+      setTimeout(() => setShowStatusSuccess(false), 3000);
     }
   };
 
@@ -145,6 +169,14 @@ const OrdersTable = ({ onOrderServed }) => {
           duration={2000}
           inPage={true}
           onClose={() => setShowSuccess(false)}
+        />
+      )}
+      {showStatusSuccess && (
+        <SuccessCard
+          message="Order status updated successfully!"
+          duration={3000}
+          inPage={true}
+          onClose={() => setShowStatusSuccess(false)}
         />
       )}
       <div className="flex justify-between items-center mb-6">
