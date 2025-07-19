@@ -216,7 +216,7 @@ const OrdersTable = () => {
                   <option value="Pending" className="text-black">Pending</option>
                   <option value="Preparing" className="text-black">Preparing</option>
                   <option value="Served" className="text-black">Served</option>
-                  <option value="Completed" className="text-black">Completed</option>
+                  {/* // <option value="Completed" className="text-black">Completed</option> */}
                 </select>
               </div>
               <button
