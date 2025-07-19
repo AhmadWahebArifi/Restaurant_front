@@ -66,9 +66,10 @@ const PaymentTable = () => {
         payment_method: paymentMethod,
         order_id: selectedPayment.id
       }
-      console.log(data + "sdfljk");
+      console.log(data.order_status);
       await api.post(`/api/payment`, data);
       // Update local state with new values
+      console.log("ok");
       setOrders((prev) =>
         prev.map((o) =>
           o.id === selectedPayment.id
@@ -236,7 +237,7 @@ const PaymentTable = () => {
                   >
                     <option value="">Select Payment Methods</option>
                     <option value="Cash">Cash</option>
-                    <option value="Cart">Cart</option>
+                    <option value="Card">Card</option>
                   </select>
                 </div>
 
