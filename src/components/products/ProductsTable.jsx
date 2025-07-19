@@ -31,7 +31,7 @@ const PRODUCT_DATA = [
   },
 ];
 
-const ProductsTable = ({ refreshTrigger }) => {
+const ProductsTable = ({ refreshTrigger, onEditMenuItem }) => {
   const { t, i18n } = useTranslation();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -40,20 +40,18 @@ const ProductsTable = ({ refreshTrigger }) => {
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = PRODUCT_DATA.filter(
+    const filtered = menuItems.filter(
       (product) =>
         product.name.toLowerCase().includes(term) ||
-        product.category.toLowerCase().includes(term)
+        (product.category && product.category.toLowerCase().includes(term))
     );
 
     setFilteredProducts(filtered);
   };
 
-
   const [menuItems, setMenuItems] = useState(PRODUCT_DATA);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
 
   const fetchMenuItems = async () => {
     setLoading(true);
@@ -80,11 +78,33 @@ const ProductsTable = ({ refreshTrigger }) => {
     }
   };
 
+  const handleEdit = (menuItem) => {
+    if (onEditMenuItem) {
+      onEditMenuItem(menuItem);
+    }
+  };
+
+  const handleDelete = async (menuItemId) => {
+    if (!window.confirm("Are you sure you want to delete this menu item?")) {
+      return;
+    }
+
+    try {
+      const response = await api.delete(`/api/menu-item/${menuItemId}`);
+      if (response.status === 200 || response.status === 204) {
+        // Refresh the table
+        fetchMenuItems();
+      } else {
+        console.error("Failed to delete menu item");
+      }
+    } catch (error) {
+      console.error("Error deleting menu item:", error);
+    }
+  };
 
   useEffect(() => {
     fetchMenuItems();
   }, [refreshTrigger]); // Refetch when refreshTrigger changes
-
 
   // Update filtered products when menuItems data changes
   useEffect(() => {
@@ -178,7 +198,7 @@ const ProductsTable = ({ refreshTrigger }) => {
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  {product.is_available ? 'Avaiable' : 'Not Available'}
+                  {product.is_available ? 'Available' : 'Not Available'}
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
@@ -190,10 +210,16 @@ const ProductsTable = ({ refreshTrigger }) => {
                 </td>
 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  <button className="text-indigo-400 hover:text-indigo-300 mr-2">
+                  <button 
+                    className="text-indigo-400 hover:text-indigo-300 mr-2"
+                    onClick={() => handleEdit(product)}
+                  >
                     <Edit size={18} />
                   </button>
-                  <button className="text-red-400 hover:text-red-300">
+                  <button 
+                    className="text-red-400 hover:text-red-300"
+                    onClick={() => handleDelete(product.id)}
+                  >
                     <Trash2 size={18} />
                   </button>
                 </td>

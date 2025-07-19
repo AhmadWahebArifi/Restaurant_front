@@ -21,10 +21,20 @@ const Customer = () => {
 
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [editingCustomer, setEditingCustomer] = useState(null);
 
   const handleCustomerAdded = useCallback(() => {
     setRefreshTrigger((prev) => prev + 1);
     setShowSuccess(true);
+    setEditingCustomer(null); // Clear editing state after successful operation
+  }, []);
+
+  const handleEditCustomer = useCallback((customer) => {
+    setEditingCustomer(customer);
+  }, []);
+
+  const handleCancelEdit = useCallback(() => {
+    setEditingCustomer(null);
   }, []);
 
   return (
@@ -60,8 +70,15 @@ const Customer = () => {
           />
         </motion.div>
       </main>
-      <CustomerForm onCustomerAdded={handleCustomerAdded} />
-      <CustomerTable refreshTrigger={refreshTrigger} />
+      <CustomerForm 
+        onCustomerAdded={handleCustomerAdded} 
+        editingCustomer={editingCustomer}
+        onCancelEdit={handleCancelEdit}
+      />
+      <CustomerTable 
+        refreshTrigger={refreshTrigger} 
+        onEditCustomer={handleEditCustomer}
+      />
     </div>
   );
 };

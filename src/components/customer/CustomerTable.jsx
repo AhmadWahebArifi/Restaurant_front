@@ -19,7 +19,7 @@ const PRODUCT_DATA = [
   },
 ];
 
-const CustomerTable = ({ refreshTrigger }) => {
+const CustomerTable = ({ refreshTrigger, onEditCustomer }) => {
   const [t] = useTranslation();
 
   const [customers, setCustomers] = useState(PRODUCT_DATA);
@@ -88,6 +88,30 @@ const CustomerTable = ({ refreshTrigger }) => {
     }
   }, [customers]);
 
+  const handleEdit = (customer) => {
+    if (onEditCustomer) {
+      onEditCustomer(customer);
+    }
+  };
+
+  const handleDelete = async (customerId) => {
+    if (!window.confirm("Are you sure you want to delete this customer?")) {
+      return;
+    }
+
+    try {
+      const response = await api.delete(`/api/customer/${customerId}`);
+      if (response.status === 200 || response.status === 204) {
+        // Refresh the table
+        fetchCustomers();
+      } else {
+        console.error("Failed to delete customer");
+      }
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="m-4 bg-blue-950 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8">
@@ -103,7 +127,6 @@ const CustomerTable = ({ refreshTrigger }) => {
       </div>
     );
   }
-  const editHandler = () => { }
 
   return (
     <motion.div
@@ -170,10 +193,16 @@ const CustomerTable = ({ refreshTrigger }) => {
                   {product.address}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  <button className="text-indigo-400 hover:text-indigo-300 mr-2">
+                  <button 
+                    className="text-indigo-400 hover:text-indigo-300 mr-2"
+                    onClick={() => handleEdit(product)}
+                  >
                     <Edit size={18} />
                   </button>
-                  <button className="text-red-400 hover:text-red-300">
+                  <button 
+                    className="text-red-400 hover:text-red-300"
+                    onClick={() => handleDelete(product.id)}
+                  >
                     <Trash2 size={18} />
                   </button>
                 </td>

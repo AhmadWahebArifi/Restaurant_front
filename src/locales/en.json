@@ -42,5 +42,22 @@
   "amount": "Amount",
   "pendingorders": "Pending Orders",
   "completeorders": "CompleteOrders",
-  "choosealanguage": "Choose a language "
+  "choosealanguage": "Choose a language ",
+  "selectcustomer": "Select Customer",
+  "customername": "Customer Name",
+  "tablenumber": "Table Number",
+  "entertablenumber": "Enter Table Number",
+  "orderstatus": "Order Status",
+  "selectorderstatus": "Select Order Status",
+  "pending": "Pending",
+  "preparing": "Preparing",
+  "served": "Served",
+  "completed": "Completed",
+  "drinks": "Drinks",
+  "selectdrinks": "Select Drinks",
+  "deserts": "Deserts",
+  "selectdeserts": "Select Deserts",
+  "foods": "Foods",
+  "selectfoods": "Select Foods",
+  "addorders": "Add Orders"
 }
