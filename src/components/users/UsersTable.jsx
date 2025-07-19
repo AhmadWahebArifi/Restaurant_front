@@ -53,7 +53,7 @@ const UsersTable = ({ refreshTrigger, onEditUser }) => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const response = await api.get("/api/user");
+      const response = await api.get("/api/employee");
 
       // Handle different response structures
       let userData = response.data;
@@ -131,7 +131,7 @@ const UsersTable = ({ refreshTrigger, onEditUser }) => {
     }
 
     try {
-      const response = await api.delete(`/api/user/${userId}`);
+      const response = await api.delete(`/api/employee/${userId}`);
       if (response.status === 200 || response.status === 204) {
         // Refresh the table
         fetchUsers();
@@ -236,11 +236,10 @@ const UsersTable = ({ refreshTrigger, onEditUser }) => {
 
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span
-                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      user.status === "Active"
-                        ? "bg-green-800 text-green-100"
-                        : "bg-red-800 text-red-100"
-                    }`}
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.status === "Active"
+                      ? "bg-green-800 text-green-100"
+                      : "bg-red-800 text-red-100"
+                      }`}
                   >
                     {user.status}
                   </span>
