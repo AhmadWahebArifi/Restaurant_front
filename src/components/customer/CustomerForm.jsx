@@ -81,38 +81,38 @@ const CustomerForm = ({ onCustomerAdded, customerToEdit, onUpdateDone }) => {
     <form onSubmit={SubmitHandler}>
       <div className="flex flex-wrap">
         <div className="p-5">
-          <label className="mb-2.5 block text-base font-medium text-dark dark:text-white">
+          <label className="mb-2.5 block text-base font-medium text-dark text-white">
             {t("name")}
           </label>
           <input
             ref={nameInput}
             type="text"
             placeholder="Enter full name"
-            className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
+            className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 text-white dark:placeholder-dark-5"
             required
           />
         </div>
         <div className="p-5">
-          <label className="mb-2.5 block text-base font-medium text-dark dark:text-white">
+          <label className="mb-2.5 block text-base font-medium text-dark text-white">
             {t("phone")}
           </label>
           <input
             ref={PhoneInput}
             type="text"
             placeholder="Enter Phone number"
-            className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
+            className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 text-white dark:placeholder-dark-5"
             required
           />
         </div>
         <div className="p-5">
-          <label className="mb-2.5 block text-base font-medium text-dark dark:text-white">
-            {t("address")}
+          <label className="mb-2.5 block text-base font-medium text-dark text-white">
+            {t("Address")}
           </label>
           <input
             ref={AddressInput}
             type="text"
             placeholder="Enter Address"
-            className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
+            className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 text-white dark:placeholder-dark-5"
             required
           />
         </div>
@@ -133,7 +133,7 @@ const CustomerForm = ({ onCustomerAdded, customerToEdit, onUpdateDone }) => {
       <button
         type="submit"
         disabled={loading}
-        className="inline-flex m-12 rounded-full border border-transparent bg-blue-950 px-7 py-3 text-center text-base font-medium text-white shadow-1 hover:bg-blue-700 disabled:border-gray-3 disabled:bg-gray-3 disabled:text-dark-5 dark:bg-gray-2 dark:shadow-box-dark dark:hover:bg-dark-3"
+        className="inline-flex m-12 rounded-full border border-transparent bg-gray-400 px-7 py-3 text-center text-base font-medium text-white shadow-1 hover:bg-blue-700 disabled:border-gray-3 disabled:bg-gray-3 disabled:text-dark-5 dark:bg-gray-2 dark:shadow-box-dark dark:hover:bg-dark-3"
       >
         {loading
           ? customerToEdit

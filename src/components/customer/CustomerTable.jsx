@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../axios";
+import {Edit , Trash2} from "lucide-react";
 import CustomerForm from "./CustomerForm";
 
 const Modal = ({ children, onClose }) => {
@@ -9,7 +10,7 @@ const Modal = ({ children, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-lg w-full"
+        className="bg-blue-950 dark:bg-gray-800 rounded-lg p-6 max-w-lg w-full"
         onClick={(e) => e.stopPropagation()}
       >
         {children}
@@ -48,11 +49,7 @@ const CustomerTable = () => {
 
   return (
     <div className="p-6">
-      {/* فقط وقتی در حالت ویرایش نیستیم فرم افزودن را نمایش بده */}
-      {!editingCustomer && (
-        <CustomerForm onCustomerAdded={fetchCustomers} />
-      )}
-
+      
       {/* جدول مشتریان */}
       <div className="overflow-x-auto mt-10">
         <table className="min-w-full text-sm text-gray-800 dark:text-white">
@@ -74,15 +71,15 @@ const CustomerTable = () => {
                   <td className="p-3 space-x-2">
                     <button
                       onClick={() => setEditingCustomer(customer)}
-                      className="px-4 py-1 bg-yellow-400 rounded hover:bg-yellow-500 text-white"
-                    >
-                      Edit
+                      className="text-indigo-400 hover:text-indigo-300 mr-2">
+                    <Edit size={18}/>
                     </button>
+
                     <button
                       onClick={() => handleDelete(customer.id)}
-                      className="px-4 py-1 bg-red-600 rounded hover:bg-red-700 text-white"
-                    >
-                      Delete
+                      className="text-red-400 hover:text-red-300">
+                   <Trash2 size={18} />
+                      
                     </button>
                   </td>
                 </tr>
