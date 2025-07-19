@@ -49,129 +49,143 @@ const AddOrderForm = ({ onCustomerAdded }) => {
   };
 
   return (
-    <div>
-      <form method="post" onSubmit={(e) => e.preventDefault()}>
-        <div className="flex flex-wrap">
-          {/* Customer Select */}
-          <div className="p-5">
-            <label className="mb-2.5 block text-base font-medium text-dark dark:text-white">
-              Customer Name
-            </label>
-            <select
-              value={selectedCustomer}
-              onChange={(e) => setSelectedCustomer(e.target.value)}
-              className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark"
-            >
-              <option value="">Select Customer</option>
-              {customers.map((customer) => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.name}
-                </option>
-              ))}
-            </select>
-          </div>
+    <div className="space-y-8">
+      {/* Form Section - Centered */}
+      <div className="flex justify-center mt-8">
+        <div className="max-w-4xl w-full">
+          <form method="post" onSubmit={(e) => e.preventDefault()}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* Customer Select */}
+              <div>
+                <label className="mb-2.5 block text-base font-medium text-gray-300">
+                  Customer Name
+                </label>
+                <select
+                  value={selectedCustomer}
+                  onChange={(e) => setSelectedCustomer(e.target.value)}
+                  className="w-full rounded-lg border border-gray-600 bg-gray-700 px-5 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="" className="bg-gray-800 text-gray-300">Select Customer</option>
+                  {customers.map((customer) => (
+                    <option key={customer.id} value={customer.id} className="bg-gray-800 text-gray-300">
+                      {customer.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          {/* Table Number */}
-          <div className="p-5">
-            <label className="mb-2.5 block text-base font-medium text-dark dark:text-white">
-              Table Number
-            </label>
-            <input
-              value={tableNumber}
-              onChange={(e) => setTableNumber(e.target.value)}
-              type="text"
-              placeholder="Enter Table Number"
-              className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark"
-              required
-            />
-          </div>
+              {/* Table Number */}
+              <div>
+                <label className="mb-2.5 block text-base font-medium text-gray-300">
+                  Table Number
+                </label>
+                <input
+                  value={tableNumber}
+                  onChange={e => {
+                    // Only allow positive integers
+                    const val = e.target.value;
+                    if (val === "" || (/^[0-9]+$/.test(val) && Number(val) > 0)) {
+                      setTableNumber(val);
+                    }
+                  }}
+                  type="number"
+                  min={1}
+                  placeholder="Enter Table Number"
+                  className="w-full rounded-lg border border-gray-600 bg-gray-700 px-5 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
 
-          {/* Order Status */}
-          <div className="p-5">
-            <label className="mb-2.5 block text-base font-medium text-dark dark:text-white">
-              Order Status
-            </label>
-            <select
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-              className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark"
-            >
-              <option value="">Select Order Status</option>
-              {status.map((s, index) => (
-                <option key={index} value={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
-          </div>
+              {/* Order Status */}
+              <div>
+                <label className="mb-2.5 block text-base font-medium text-gray-300">
+                  Order Status
+                </label>
+                <select
+                  value={selectedStatus}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                  className="w-full rounded-lg border border-gray-600 bg-gray-700 px-5 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="" className="bg-gray-800 text-gray-300">Select Order Status</option>
+                  {status.map((s, index) => (
+                    <option key={index} value={s} className="bg-gray-800 text-gray-300">
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          {/* Nushaba Bab */}
-          <div className="p-5">
-            <label className="mb-2.5 block text-base font-medium text-dark dark:text-white">
-              Nushaba Bab
-            </label>
-            <select
-              value={nushabaSelect}
-              onChange={(e) => handleItemSelect(nushaba, e.target.value, setNushabaSelect)}
-              className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark"
-            >
-              <option value="">Select Nushaba Bab</option>
-              {nushaba.map((nus) => (
-                <option key={nus.id} value={nus.id}>
-                  {nus.name}
-                </option>
-              ))}
-            </select>
-          </div>
+              {/* Nushaba Bab */}
+              <div>
+                <label className="mb-2.5 block text-base font-medium text-gray-300">
+                  Nushaba Bab
+                </label>
+                <select
+                  value={nushabaSelect}
+                  onChange={(e) => handleItemSelect(nushaba, e.target.value, setNushabaSelect)}
+                  className="w-full rounded-lg border border-gray-600 bg-gray-700 px-5 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="" className="bg-gray-800 text-gray-300">Select Nushaba Bab</option>
+                  {nushaba.map((nus) => (
+                    <option key={nus.id} value={nus.id} className="bg-gray-800 text-gray-300">
+                      {nus.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          {/* Shirini Bab */}
-          <div className="p-5">
-            <label className="mb-2.5 block text-base font-medium text-dark dark:text-white">
-              Shirini Bab
-            </label>
-            <select
-              value={shiriniSelect}
-              onChange={(e) => handleItemSelect(shirini, e.target.value, setShiriniSelect)}
-              className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark"
-            >
-              <option value="">Select Shirini Bab</option>
-              {shirini.map((shir) => (
-                <option key={shir.id} value={shir.id}>
-                  {shir.name}
-                </option>
-              ))}
-            </select>
-          </div>
+              {/* Shirini Bab */}
+              <div>
+                <label className="mb-2.5 block text-base font-medium text-gray-300">
+                  Shirini Bab
+                </label>
+                <select
+                  value={shiriniSelect}
+                  onChange={(e) => handleItemSelect(shirini, e.target.value, setShiriniSelect)}
+                  className="w-full rounded-lg border border-gray-600 bg-gray-700 px-5 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="" className="bg-gray-800 text-gray-300">Select Shirini Bab</option>
+                  {shirini.map((shir) => (
+                    <option key={shir.id} value={shir.id} className="bg-gray-800 text-gray-300">
+                      {shir.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          {/* Khuraka Bab */}
-          <div className="p-5">
-            <label className="mb-2.5 block text-base font-medium text-dark dark:text-white">
-              Khuraka Bab
-            </label>
-            <select
-              value={khurakaSelect}
-              onChange={(e) => handleItemSelect(khuraka, e.target.value, setKhurakaSelect)}
-              className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark"
-            >
-              <option value="">Select Khuraka Bab</option>
-              {khuraka.map((khu) => (
-                <option key={khu.id} value={khu.id}>
-                  {khu.name}
-                </option>
-              ))}
-            </select>
-          </div>
+              {/* Khuraka Bab */}
+              <div>
+                <label className="mb-2.5 block text-base font-medium text-gray-300">
+                  Khuraka Bab
+                </label>
+                <select
+                  value={khurakaSelect}
+                  onChange={(e) => handleItemSelect(khuraka, e.target.value, setKhurakaSelect)}
+                  className="w-full rounded-lg border border-gray-600 bg-gray-700 px-5 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="" className="bg-gray-800 text-gray-300">Select Khuraka Bab</option>
+                  {khuraka.map((khu) => (
+                    <option key={khu.id} value={khu.id} className="bg-gray-800 text-gray-300">
+                      {khu.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
 
-      {/* Order Items Table */}
-      <OrderItemTable
-        items={orderItems}
-        setItems={setOrderItems}
-        customerId={selectedCustomer}
-        tableNumber={tableNumber}
-        orderStatus={selectedStatus}
-      />
+      {/* Order Items Table - Full Width Below */}
+      <div>
+        <OrderItemTable
+          items={orderItems}
+          setItems={setOrderItems}
+          customerId={selectedCustomer}
+          tableNumber={tableNumber}
+          orderStatus={selectedStatus}
+        />
+      </div>
     </div>
   );
 };

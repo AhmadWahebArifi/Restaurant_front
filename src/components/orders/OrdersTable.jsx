@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Search, Eye, Edit, Trash2, X } from "lucide-react";
+import { Search, Eye, Trash2, X } from "lucide-react";
 import api from "../../axios";
+import ProgressBar from "../common/ProgressBar";
+import SuccessCard from "../common/SuccessCard";
 
 const OrderTable = [];
 
@@ -12,6 +14,10 @@ const OrdersTable = () => {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null); // For modal
   const [newStatus, setNewStatus] = useState(""); // For status update
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [orderToDelete, setOrderToDelete] = useState(null);
+  const [progressTrigger, setProgressTrigger] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -53,6 +59,37 @@ const OrdersTable = () => {
     setSelectedOrder(null);
   };
 
+  const handleDeleteClick = (order) => {
+    setOrderToDelete(order);
+    setShowDeleteConfirm(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!orderToDelete) return;
+    try {
+      console.log("Attempting to delete order:", orderToDelete.id);
+      const response = await api.delete(`/api/order/${orderToDelete.id}`);
+      console.log("Delete response:", response);
+      if (response.status === 200 || response.status === 204) {
+        setOrders((prev) => prev.filter((o) => o.id !== orderToDelete.id));
+        setFilteredOrders((prev) => prev.filter((o) => o.id !== orderToDelete.id));
+        setShowSuccess(true);
+      } else {
+        alert("Failed to delete order.");
+      }
+    } catch (error) {
+      console.error("Error deleting order:", error);
+      console.error("Error response:", error.response?.data);
+      console.error("Error status:", error.response?.status);
+      alert(`Failed to delete order. Status: ${error.response?.status || 'Unknown'}`);
+    } finally {
+      setShowDeleteConfirm(false);
+      setOrderToDelete(null);
+    }
+  };
+
+
+
   const updateStatus = async () => {
     try {
       await api.put(`api/order/update-status/${selectedOrder.id}`, { order_status: newStatus });
@@ -67,6 +104,9 @@ const OrdersTable = () => {
         )
       );
       closeModal();
+      setProgressTrigger(false); // reset before triggering
+      setTimeout(() => setProgressTrigger(true), 10); // trigger progress bar
+      setTimeout(() => setProgressTrigger(false), 1200); // hide after animation
     } catch (error) {
       console.error("Error updating order:", error);
       alert("Failed to update order status.");
@@ -80,6 +120,18 @@ const OrdersTable = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 }}
     >
+      {/* Progress Bar Animation */}
+      <div className="mb-2">
+        <ProgressBar trigger={progressTrigger} />
+      </div>
+      {showSuccess && (
+        <SuccessCard
+          message="Order deleted successfully!"
+          duration={2000}
+          inPage={true}
+          onClose={() => setShowSuccess(false)}
+        />
+      )}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-100">Order List</h2>
         <div className="relative">
@@ -169,10 +221,8 @@ const OrdersTable = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                     <button className="text-indigo-400 hover:text-indigo-300 mr-2" onClick={() => openModal(order)} >
                       <Eye size={18} />
-                    </button> <button className="text-indigo-400 hover:text-indigo-300 mr-2">
-                      <Edit size={17} />
                     </button>
-                    <button className="text-red-400 hover:text-red-300">
+                    <button className="text-red-400 hover:text-red-300" onClick={() => handleDeleteClick(order)}>
                       <Trash2 size={17} />
                     </button>
                   </td>
@@ -181,6 +231,31 @@ const OrdersTable = () => {
             </tbody>}
         </table>
       </div>
+
+      {/* Delete Confirmation Popup */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-80">
+            <h3 className="text-lg font-bold text-gray-800 mb-4">Are you sure?</h3>
+            <div className="flex justify-end gap-4">
+              <button
+                className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300"
+                onClick={() => setShowDeleteConfirm(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500"
+                onClick={handleConfirmDelete}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
 
       {/* Modal */}
       <AnimatePresence>
