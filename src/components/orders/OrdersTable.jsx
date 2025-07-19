@@ -4,10 +4,12 @@ import { Search, Eye, Trash2, X } from "lucide-react";
 import api from "../../axios";
 import ProgressBar from "../common/ProgressBar";
 import SuccessCard from "../common/SuccessCard";
+import { useTranslation } from "react-i18next";
 
 const OrderTable = [];
 
 const OrdersTable = () => {
+  const [t] = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState([]);
@@ -49,7 +51,6 @@ const OrdersTable = () => {
     setFilteredOrders(filtered);
   };
 
-
   const openModal = (order) => {
     setSelectedOrder(order);
     setNewStatus(order.status);
@@ -72,7 +73,9 @@ const OrdersTable = () => {
       console.log("Delete response:", response);
       if (response.status === 200 || response.status === 204) {
         setOrders((prev) => prev.filter((o) => o.id !== orderToDelete.id));
-        setFilteredOrders((prev) => prev.filter((o) => o.id !== orderToDelete.id));
+        setFilteredOrders((prev) =>
+          prev.filter((o) => o.id !== orderToDelete.id)
+        );
         setShowSuccess(true);
       } else {
         alert("Failed to delete order.");
@@ -81,18 +84,20 @@ const OrdersTable = () => {
       console.error("Error deleting order:", error);
       console.error("Error response:", error.response?.data);
       console.error("Error status:", error.response?.status);
-      alert(`Failed to delete order. Status: ${error.response?.status || 'Unknown'}`);
+      alert(
+        `Failed to delete order. Status: ${error.response?.status || "Unknown"}`
+      );
     } finally {
       setShowDeleteConfirm(false);
       setOrderToDelete(null);
     }
   };
 
-
-
   const updateStatus = async () => {
     try {
-      await api.put(`api/order/update-status/${selectedOrder.id}`, { order_status: newStatus });
+      await api.put(`api/order/update-status/${selectedOrder.id}`, {
+        order_status: newStatus,
+      });
       setOrders((prev) =>
         prev.map((o) =>
           o.id === selectedOrder.id ? { ...o, status: newStatus } : o
@@ -151,25 +156,25 @@ const OrdersTable = () => {
           <thead>
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Order ID
+                {t("orderid")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Customer
+                {t("customer")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Table Number
+                {t("tablenumber")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Total
+                {t("total")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Status
+                {t("status")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Date
+                {t("date")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Actions
+                {t("action")}
               </th>
             </tr>
           </thead>
@@ -179,7 +184,7 @@ const OrdersTable = () => {
                 Loading orders...
               </td>
             </tr>
-          ) :
+          ) : (
             <tbody className="divide divide-gray-700">
               {filteredOrders.map((order) => (
                 <motion.tr
@@ -187,7 +192,6 @@ const OrdersTable = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
-
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
                     {order.id}
@@ -203,14 +207,15 @@ const OrdersTable = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                     <span
-                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${order.status === "Completed"
-                        ? "bg-green-100 text-green-800"
-                        : order.status === "Preparing"
+                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        order.status === "Completed"
+                          ? "bg-green-100 text-green-800"
+                          : order.status === "Preparing"
                           ? "bg-yellow-100 text-yellow-800"
                           : order.status === "Pending"
-                            ? "bg-red-100 text-red-800"
-                            : "bg-blue-100 text-blue-800" // Served
-                        }`}
+                          ? "bg-red-100 text-red-800"
+                          : "bg-blue-100 text-blue-800" // Served
+                      }`}
                     >
                       {order.status}
                     </span>
@@ -219,16 +224,23 @@ const OrdersTable = () => {
                     {order.date}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    <button className="text-indigo-400 hover:text-indigo-300 mr-2" onClick={() => openModal(order)} >
+                    <button
+                      className="text-indigo-400 hover:text-indigo-300 mr-2"
+                      onClick={() => openModal(order)}
+                    >
                       <Eye size={18} />
                     </button>
-                    <button className="text-red-400 hover:text-red-300" onClick={() => handleDeleteClick(order)}>
+                    <button
+                      className="text-red-400 hover:text-red-300"
+                      onClick={() => handleDeleteClick(order)}
+                    >
                       <Trash2 size={17} />
                     </button>
                   </td>
                 </motion.tr>
               ))}
-            </tbody>}
+            </tbody>
+          )}
         </table>
       </div>
 
@@ -236,7 +248,9 @@ const OrdersTable = () => {
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-lg p-6 w-80">
-            <h3 className="text-lg font-bold text-gray-800 mb-4">Are you sure?</h3>
+            <h3 className="text-lg font-bold text-gray-800 mb-4">
+              Are you sure?
+            </h3>
             <div className="flex justify-end gap-4">
               <button
                 className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300"
@@ -254,8 +268,6 @@ const OrdersTable = () => {
           </div>
         </div>
       )}
-
-
 
       {/* Modal */}
       <AnimatePresence>
@@ -275,22 +287,37 @@ const OrdersTable = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-gray-800">Update Order</h3>
-                <button onClick={closeModal} className="text-gray-500 hover:text-gray-700"><X size={20} /></button>
+                <h3 className="text-lg font-bold text-gray-800">
+                  Update Order
+                </h3>
+                <button
+                  onClick={closeModal}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <X size={20} />
+                </button>
               </div>
               <p className="text-gray-700 mb-4">
                 <strong>Order ID:</strong> {selectedOrder.id}
               </p>
               <div className="mb-4">
-                <label className="block text-gray-600 mb-2">Change Status</label>
+                <label className="block text-gray-600 mb-2">
+                  Change Status
+                </label>
                 <select
                   value={newStatus}
                   onChange={(e) => setNewStatus(e.target.value)}
                   className="w-full border border-gray-300 text-black rounded-lg p-2"
                 >
-                  <option value="Pending" className="text-black">Pending</option>
-                  <option value="Preparing" className="text-black">Preparing</option>
-                  <option value="Served" className="text-black">Served</option>
+                  <option value="Pending" className="text-black">
+                    Pending
+                  </option>
+                  <option value="Preparing" className="text-black">
+                    Preparing
+                  </option>
+                  <option value="Served" className="text-black">
+                    Served
+                  </option>
                   {/* // <option value="Completed" className="text-black">Completed</option> */}
                 </select>
               </div>

@@ -93,11 +93,11 @@ const CustomerTable = ({ refreshTrigger, onEditCustomer }) => {
       onEditCustomer(customer);
       // Scroll to the form fields after a short delay to ensure the form is populated
       setTimeout(() => {
-        const formElement = document.querySelector('form');
+        const formElement = document.querySelector("form");
         if (formElement) {
-          formElement.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start' 
+          formElement.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
           });
         }
       }, 100);
@@ -150,7 +150,7 @@ const CustomerTable = ({ refreshTrigger, onEditCustomer }) => {
         <div className="relative">
           <input
             type="text"
-            placeholder="Search customers..."
+            placeholder={t("search")}
             className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleSearch}
             value={searchTerm}
