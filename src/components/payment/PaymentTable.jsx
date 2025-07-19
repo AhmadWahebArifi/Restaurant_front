@@ -3,6 +3,7 @@ import { Eye, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import api from "../../axios";
+import ProgressBar from "../common/ProgressBar";
 
 const PaymentTable = () => {
   const [t] = useTranslation();
@@ -16,6 +17,7 @@ const PaymentTable = () => {
   // Track inputs for modal form
   const [status, setStatus] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [progressTrigger, setProgressTrigger] = useState(false);
 
 
   const fetchOrders = async () => {
@@ -68,23 +70,33 @@ const PaymentTable = () => {
       }
       console.log(data.order_status);
       await api.post(`/api/payment`, data);
-      // Update local state with new values
-      console.log("ok");
-      setOrders((prev) =>
-        prev.map((o) =>
-          o.id === selectedPayment.id
-            ? { ...o, status: status, payment_method: paymentMethod }
-            : o
-        )
-      );
-      setFilteredOrders((prev) =>
-        prev.map((o) =>
-          o.id === selectedPayment.id
-            ? { ...o, status: status, payment_method: paymentMethod }
-            : o
-        )
-      );
+      
+      // If status is changed to "Completed", remove the order from the table
+      if (status === "Completed") {
+        setOrders((prev) => prev.filter((o) => o.id !== selectedPayment.id));
+        setFilteredOrders((prev) => prev.filter((o) => o.id !== selectedPayment.id));
+      } else {
+        // Otherwise, just update the status
+        setOrders((prev) =>
+          prev.map((o) =>
+            o.id === selectedPayment.id
+              ? { ...o, status: status, payment_method: paymentMethod }
+              : o
+          )
+        );
+        setFilteredOrders((prev) =>
+          prev.map((o) =>
+            o.id === selectedPayment.id
+              ? { ...o, status: status, payment_method: paymentMethod }
+              : o
+          )
+        );
+      }
+      
       closeModal();
+      setProgressTrigger(false); // reset before triggering
+      setTimeout(() => setProgressTrigger(true), 10); // trigger progress bar
+      setTimeout(() => setProgressTrigger(false), 1200); // hide after animation
     } catch (error) {
       console.error("Error updating payment:", error);
       alert("Failed to Create payment information.");
@@ -98,6 +110,10 @@ const PaymentTable = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
     >
+      {/* Progress Bar Animation */}
+      <div className="mb-2">
+        <ProgressBar trigger={progressTrigger} />
+      </div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-100">Payments</h2>
         <div className="relative">
@@ -129,13 +145,13 @@ const PaymentTable = () => {
                 {t("status")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                {t("table number")}
+                {t("tablenumber")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                 {t("date")}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                Actions
+                {t("action")}
               </th>
             </tr>
           </thead>
@@ -164,7 +180,15 @@ const PaymentTable = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                     {product.total}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  <td  className={`px-6 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        product.status === "Completed"
+                          ? "bg-green-100 text-green-800"
+                          : product.status === "Preparing"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : product.status === "Pending"
+                          ? "bg-red-100 text-red-800"
+                          : "bg-blue-100 text-blue-800" // Served
+                      }`}>
                     {product.status}
                   </td>
 
