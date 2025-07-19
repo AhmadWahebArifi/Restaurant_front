@@ -11,15 +11,21 @@ const AddOrderForm = ({ onCustomerAdded }) => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
-    const [categories, setCategories] = useState([]);
+    const [status, setStatus] = useState([]);
     const [customers, setCustomers] = useState([]);
+    const [shirini, setShirini] = useState([]);
+    const [khuraka, setKhuraka] = useState([]);
+    const [nushaba, setNushaba] = useState([]);
     // const []
     useEffect(() => {
         const fetchCategories = async () => {
             try {
                 const response = await api.get("/api/order/create");
-                setCategories(response.data.status);
+                setStatus(response.data.status);
                 setCustomers(response.data.customers);
+                setShirini(response.data.shirini);
+                setKhuraka(response.data.khuraka);
+                setNushaba(response.data.nushaba);
             } catch (error) {
                 console.error("Error fetching categories:", error);
             }
@@ -96,12 +102,12 @@ const AddOrderForm = ({ onCustomerAdded }) => {
                         >
                             Select Customer
                         </option>
-                        {/* {customers.map((customer, index) => (
+                        {customers.map((customer, index) => (
                             <option key={index} value={customer.id} className="bg-black text-dark dark:text-white"
                             >
                                 {customer.name}
                             </option>
-                        ))} */}
+                        ))}
                     </select>
                 </div>
                 <div className="p-5">
@@ -135,12 +141,12 @@ const AddOrderForm = ({ onCustomerAdded }) => {
                         >
                             Select Order Status
                         </option>
-                        {/* {categories.map((cat, index) => (
+                        {status.map((cat, index) => (
                             <option key={index} value={cat} className="bg-black text-dark dark:text-white"
                             >
                                 {cat}
                             </option>
-                        ))} */}
+                        ))}
                     </select>
                 </div>
                 <div className="p-5">
@@ -158,12 +164,13 @@ const AddOrderForm = ({ onCustomerAdded }) => {
                         >
                             Select Nushaba bab
                         </option>
-                        {/* {categories.map((cat, index) => (
-                            <option key={index} value={cat} className="bg-black text-dark dark:text-white"
+                        {nushaba.map((nus
+                            , index) => (
+                            <option key={index} value={nus.id} className="bg-black text-dark dark:text-white"
                             >
-                                {cat}
+                                {nus.name}
                             </option>
-                        ))} */}
+                        ))}
                     </select>
                 </div>
                 <div className="p-5">
@@ -181,12 +188,12 @@ const AddOrderForm = ({ onCustomerAdded }) => {
                         >
                             Select Shirini Bab
                         </option>
-                        {/* {categories.map((cat, index) => (
-                            <option key={index} value={cat} className="bg-black text-dark dark:text-white"
+                        {shirini.map((shir, index) => (
+                            <option key={index} value={shir.id} className="bg-black text-dark dark:text-white"
                             >
-                                {cat}
+                                {shir.name}
                             </option>
-                        ))} */}
+                        ))}
                     </select>
                 </div>
                 <div className="p-5">
@@ -204,12 +211,12 @@ const AddOrderForm = ({ onCustomerAdded }) => {
                         >
                             Select Khuraka Bab
                         </option>
-                        {/* {categories.map((cat, index) => (
-                            <option key={index} value={cat} className="bg-black text-dark dark:text-white"
+                        {khuraka.map((khu, index) => (
+                            <option key={index} value={khu.id} className="bg-black text-dark dark:text-white"
                             >
-                                {cat}
+                                {khu.name}
                             </option>
-                        ))} */}
+                        ))}
                     </select>
                 </div>
             </div>
@@ -250,7 +257,7 @@ const AddOrderForm = ({ onCustomerAdded }) => {
                         </defs>
                     </svg>
                 </span>
-                {loading ? "Adding..." : "Add Customer"}
+                {loading ? "Adding..." : "Order"}
             </button>
         </form>
     );
