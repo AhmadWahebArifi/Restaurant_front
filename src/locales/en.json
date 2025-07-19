@@ -59,5 +59,8 @@
   "selectdeserts": "Select Deserts",
   "foods": "Foods",
   "selectfoods": "Select Foods",
-  "addorders": "Add Orders"
+  "addorders": "Add Orders",
+  "date": "Date",
+  "orderid": "Order ID",
+  "total": "Total"
 }

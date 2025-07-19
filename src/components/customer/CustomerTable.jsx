@@ -91,6 +91,16 @@ const CustomerTable = ({ refreshTrigger, onEditCustomer }) => {
   const handleEdit = (customer) => {
     if (onEditCustomer) {
       onEditCustomer(customer);
+      // Scroll to the form fields after a short delay to ensure the form is populated
+      setTimeout(() => {
+        const formElement = document.querySelector("form");
+        if (formElement) {
+          formElement.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }, 100);
     }
   };
 
@@ -140,7 +150,7 @@ const CustomerTable = ({ refreshTrigger, onEditCustomer }) => {
         <div className="relative">
           <input
             type="text"
-            placeholder="Search customers..."
+            placeholder={t("search")}
             className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={handleSearch}
             value={searchTerm}
@@ -177,11 +187,6 @@ const CustomerTable = ({ refreshTrigger, onEditCustomer }) => {
                 transition={{ duration: 0.3 }}
               >
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 flex gap-2 items-center">
-                  <img
-                    src="https://images.unsplash.com/photo-1627989580309-bfaf3e58af6f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d2lyZWxlc3MlMjBlYXJidWRzfGVufDB8fDB8fHww"
-                    alt="Product img"
-                    className="size-10 rounded-full"
-                  />
                   {product.name}
                 </td>
 
@@ -193,13 +198,13 @@ const CustomerTable = ({ refreshTrigger, onEditCustomer }) => {
                   {product.address}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                  <button 
+                  <button
                     className="text-indigo-400 hover:text-indigo-300 mr-2"
                     onClick={() => handleEdit(product)}
                   >
                     <Edit size={18} />
                   </button>
-                  <button 
+                  <button
                     className="text-red-400 hover:text-red-300"
                     onClick={() => handleDelete(product.id)}
                   >

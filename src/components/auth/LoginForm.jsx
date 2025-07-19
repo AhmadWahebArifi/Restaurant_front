@@ -51,7 +51,7 @@ const Form = () => {
                 }}
               >
                 {({ handleSubmit }) => (
-                  <form onSubmit={handleSubmit} >
+                  <form onSubmit={handleSubmit}>
                     <div className="mb-6">
                       <Field
                         type="text"
