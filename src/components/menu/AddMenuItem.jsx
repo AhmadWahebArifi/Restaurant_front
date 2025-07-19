@@ -28,6 +28,7 @@ const AddMenuItem = ({ onCustomerAdded }) => {
             try {
                 const response = await api.get("/api/menu-item/create");
                 setCategories(response.data.category);
+                // console.log()
             } catch (error) {
                 console.error("Error fetching categories:", error);
             }
@@ -55,7 +56,7 @@ const AddMenuItem = ({ onCustomerAdded }) => {
                 price: PriceInput.current.value,
                 category: categoryInput.current.value
             };
-            console.log(menuItem);
+            console.log(menuItem.category);
             // Make API call to save customer
             const response = await api.post("/api/menu-item", menuItem);
 
@@ -84,6 +85,7 @@ const AddMenuItem = ({ onCustomerAdded }) => {
             setLoading(false);
         }
     };
+    // console.log(categories);
     return (
         <form method="post" onSubmit={SubmitHandler}>
             <div className="flex flex-wrap">
