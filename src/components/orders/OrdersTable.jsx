@@ -98,16 +98,25 @@ const OrdersTable = () => {
       await api.put(`api/order/update-status/${selectedOrder.id}`, {
         order_status: newStatus,
       });
-      setOrders((prev) =>
-        prev.map((o) =>
-          o.id === selectedOrder.id ? { ...o, status: newStatus } : o
-        )
-      );
-      setFilteredOrders((prev) =>
-        prev.map((o) =>
-          o.id === selectedOrder.id ? { ...o, status: newStatus } : o
-        )
-      );
+      
+      // If status is changed to "Served", remove the order from the table
+      if (newStatus === "Served") {
+        setOrders((prev) => prev.filter((o) => o.id !== selectedOrder.id));
+        setFilteredOrders((prev) => prev.filter((o) => o.id !== selectedOrder.id));
+      } else {
+        // Otherwise, just update the status
+        setOrders((prev) =>
+          prev.map((o) =>
+            o.id === selectedOrder.id ? { ...o, status: newStatus } : o
+          )
+        );
+        setFilteredOrders((prev) =>
+          prev.map((o) =>
+            o.id === selectedOrder.id ? { ...o, status: newStatus } : o
+          )
+        );
+      }
+      
       closeModal();
       setProgressTrigger(false); // reset before triggering
       setTimeout(() => setProgressTrigger(true), 10); // trigger progress bar
