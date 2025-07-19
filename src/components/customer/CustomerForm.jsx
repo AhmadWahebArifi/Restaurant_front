@@ -12,19 +12,19 @@ const CustomerForm = ({ onCustomerAdded }) => {
   const ctx = useContext(authContext);
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const SubmitHandler = async (e) => {
     e.preventDefault();
 
     // Check if user is logged in
     if (!ctx.isLogin) {
-      setMessage("Please login first to add customers.");
+      setError("Please login first to add customers.");
       return;
     }
 
     setLoading(true);
-    setMessage("");
+    setError("");
 
     try {
       const customerData = {
@@ -37,31 +37,23 @@ const CustomerForm = ({ onCustomerAdded }) => {
       const response = await api.post("/api/customer", customerData);
 
       if (response.status === 201 || response.status === 200) {
-        setMessage("Customer added successfully!");
         // Clear form fields
         nameInput.current.value = "";
         PhoneInput.current.value = "";
         AddressInput.current.value = "";
 
-        // Notify parent component to refresh the table
+        // Notify parent component to refresh the table and show success
         if (onCustomerAdded) {
           onCustomerAdded();
         }
       } else {
-        setMessage("Failed to add customer. Please try again.");
+        setError("Failed to add customer. Please try again.");
       }
     } catch (error) {
-      console.log("Error saving customer:", error.response?.data);
-      console.log("Error status:", error.response?.status);
-      console.log("Error headers:", error.response?.headers);
-      console.log("Full error:", error);
-      setMessage("Failed to add customer. Please try again.");
+      setError("Failed to add customer. Please try again.");
     } finally {
       setLoading(false);
     }
-  };
-  const editHandler = (id) => {
-    console.log('Edit incoming'); // or combine both logs
   };
 
   return (
@@ -117,14 +109,9 @@ const CustomerForm = ({ onCustomerAdded }) => {
         </div>
       </div>
 
-      {message && (
-        <div
-          className={`px-5 py-2 rounded-lg ${message.includes("successfully")
-            ? "bg-green-100 text-green-800"
-            : "bg-red-100 text-red-800"
-            }`}
-        >
-          {message}
+      {error && (
+        <div className="px-5 py-2 rounded-lg bg-red-100 text-red-800">
+          {error}
         </div>
       )}
 

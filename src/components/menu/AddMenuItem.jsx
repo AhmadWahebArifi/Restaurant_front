@@ -4,7 +4,7 @@ import authContext from "../../store/auth-context";
 import { useTranslation } from "react-i18next";
 
 const AddMenuItem = ({ onCustomerAdded }) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const cat = t("category");
     const nam = t("name");
     const des = t("description");
@@ -20,7 +20,6 @@ const AddMenuItem = ({ onCustomerAdded }) => {
 
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
-
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
