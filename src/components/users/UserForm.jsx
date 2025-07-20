@@ -18,19 +18,37 @@ const UserForm = ({ onUserAdded, editingUser, onCancelEdit }) => {
 
   // Populate form when editing user
   if (editingUser && !isEditing) {
+    console.log("=== POPULATING USER FORM FOR EDITING ===");
+    console.log("Editing user:", editingUser);
+    console.log("Current isEditing state:", isEditing);
+    
     nameInput.current.value = editingUser.name || "";
     emailInput.current.value = editingUser.email || "";
     roleInput.current.value = editingUser.role || "";
     statusInput.current.value = editingUser.status || "";
+    
+    console.log("Form values set:");
+    console.log("Name:", nameInput.current.value);
+    console.log("Email:", emailInput.current.value);
+    console.log("Role:", roleInput.current.value);
+    console.log("Status:", statusInput.current.value);
+    
     setIsEditing(true);
+    console.log("isEditing set to true");
   }
 
   const clearForm = () => {
+    console.log("=== CLEARING USER FORM ===");
+    console.log("Current isEditing state:", isEditing);
+    
     nameInput.current.value = "";
     emailInput.current.value = "";
     roleInput.current.value = "";
     statusInput.current.value = "";
+    
+    console.log("Form values cleared");
     setIsEditing(false);
+    console.log("isEditing set to false");
   };
 
   const SubmitHandler = async (e) => {
@@ -52,16 +70,32 @@ const UserForm = ({ onUserAdded, editingUser, onCancelEdit }) => {
         status: statusInput.current.value,
       };
 
+      console.log("=== USER FORM SUBMIT DEBUG ===");
+      console.log("Submitting user data:", userData);
+      console.log("Is editing:", isEditing);
+      console.log("Editing user ID:", editingUser?.id);
+
       let response;
       if (isEditing && editingUser) {
         // Update existing user
+        console.log("=== UPDATING USER ===");
+        console.log("Update URL:", `/api/employee/${editingUser.id}`);
+        console.log("Update data:", userData);
         response = await api.put(`/api/employee/${editingUser.id}`, userData);
       } else {
         // Create new user
+        console.log("=== CREATING NEW USER ===");
+        console.log("Create URL:", "/api/employee");
+        console.log("Create data:", userData);
         response = await api.post("/api/employee", userData);
       }
 
+      console.log("=== API RESPONSE ===");
+      console.log("Response status:", response.status);
+      console.log("Response data:", response.data);
+
       if (response.status === 201 || response.status === 200) {
+        console.log("Success! Calling onUserAdded callback");
         clearForm();
         if (onUserAdded) {
           onUserAdded();
@@ -70,7 +104,24 @@ const UserForm = ({ onUserAdded, editingUser, onCancelEdit }) => {
         setError(`Failed to ${isEditing ? 'update' : 'add'} user. Please try again.`);
       }
     } catch (error) {
-      setError(`Failed to ${isEditing ? 'update' : 'add'} user. Please try again.`);
+      console.error("=== ERROR DETAILS ===");
+      console.error("Error object:", error);
+      console.error("Error response:", error.response);
+      console.error("Error message:", error.message);
+      console.error("Error status:", error.response?.status);
+      console.error("Error data:", error.response?.data);
+      
+      if (error.response?.data?.message) {
+        setError(`Error: ${error.response.data.message}`);
+      } else if (error.response?.data?.error) {
+        setError(`Error: ${error.response.data.error}`);
+      } else if (error.response?.data?.errors) {
+        // Handle validation errors
+        const errorMessages = Object.values(error.response.data.errors).flat();
+        setError(`Validation errors: ${errorMessages.join(', ')}`);
+      } else {
+        setError(`Failed to ${isEditing ? 'update' : 'add'} user. Please try again.`);
+      }
     } finally {
       setLoading(false);
     }

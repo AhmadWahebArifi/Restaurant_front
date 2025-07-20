@@ -25,19 +25,37 @@ const AddMenuItem = ({ onCustomerAdded, editingMenuItem, onCancelEdit }) => {
 
   // Populate form when editing menu item
   if (editingMenuItem && !isEditing) {
+    console.log("=== POPULATING FORM FOR EDITING ===");
+    console.log("Editing menu item:", editingMenuItem);
+    console.log("Current isEditing state:", isEditing);
+    
     nameInput.current.value = editingMenuItem.name || "";
     descriptionInput.current.value = editingMenuItem.description || "";
     PriceInput.current.value = editingMenuItem.price || "";
     categoryInput.current.value = editingMenuItem.category || "";
+    
+    console.log("Form values set:");
+    console.log("Name:", nameInput.current.value);
+    console.log("Description:", descriptionInput.current.value);
+    console.log("Price:", PriceInput.current.value);
+    console.log("Category:", categoryInput.current.value);
+    
     setIsEditing(true);
+    console.log("isEditing set to true");
   }
 
   const clearForm = () => {
+    console.log("=== CLEARING FORM ===");
+    console.log("Current isEditing state:", isEditing);
+    
     nameInput.current.value = "";
     descriptionInput.current.value = "";
     PriceInput.current.value = "";
     categoryInput.current.value = "";
+    
+    console.log("Form values cleared");
     setIsEditing(false);
+    console.log("isEditing set to false");
   };
 
   useEffect(() => {
@@ -72,26 +90,57 @@ const AddMenuItem = ({ onCustomerAdded, editingMenuItem, onCancelEdit }) => {
         category: categoryInput.current.value,
       };
 
+      console.log("=== SUBMIT HANDLER DEBUG ===");
+      console.log("Submitting menu item:", menuItem);
+      console.log("Is editing:", isEditing);
+      console.log("Editing menu item ID:", editingMenuItem?.id);
+      console.log("Editing menu item data:", editingMenuItem);
+
       let response;
       if (isEditing && editingMenuItem) {
         // Update existing menu item
+        console.log("=== UPDATING MENU ITEM ===");
+        console.log("Update URL:", `/api/menu-item/${editingMenuItem.id}`);
+        console.log("Update data:", menuItem);
         response = await api.put(`/api/menu-item/${editingMenuItem.id}`, menuItem);
       } else {
         // Create new menu item
+        console.log("=== CREATING NEW MENU ITEM ===");
+        console.log("Create URL:", "/api/menu-item");
+        console.log("Create data:", menuItem);
         response = await api.post("/api/menu-item", menuItem);
       }
+
+      console.log("=== API RESPONSE ===");
+      console.log("Response status:", response.status);
+      console.log("Response data:", response.data);
+      console.log("Response headers:", response.headers);
 
       if (response.status === 201 || response.status === 200) {
         setMessage(`Menu Item ${isEditing ? 'updated' : 'added'} successfully!`);
         clearForm();
         if (onCustomerAdded) {
+          console.log("Calling onCustomerAdded callback");
           onCustomerAdded();
         }
       } else {
         setMessage(`Failed to ${isEditing ? 'update' : 'add'} menu item. Please try again.`);
       }
     } catch (error) {
-      setMessage(`Failed to ${isEditing ? 'update' : 'add'} menu item. Please try again.`);
+      console.error("=== ERROR DETAILS ===");
+      console.error("Error object:", error);
+      console.error("Error response:", error.response);
+      console.error("Error message:", error.message);
+      console.error("Error status:", error.response?.status);
+      console.error("Error data:", error.response?.data);
+      
+      if (error.response?.data?.message) {
+        setMessage(`Error: ${error.response.data.message}`);
+      } else if (error.response?.data?.error) {
+        setMessage(`Error: ${error.response.data.error}`);
+      } else {
+        setMessage(`Failed to ${isEditing ? 'update' : 'add'} menu item. Please try again.`);
+      }
     } finally {
       setLoading(false);
     }
@@ -173,7 +222,7 @@ const AddMenuItem = ({ onCustomerAdded, editingMenuItem, onCancelEdit }) => {
         </div>
         <div className="p-5">
           <label
-            htmlFor="Price"
+            htmlFor="price"
             className="mb-2.5 block text-base font-medium text-dark dark:text-white"
           >
             {pr}
@@ -181,7 +230,7 @@ const AddMenuItem = ({ onCustomerAdded, editingMenuItem, onCancelEdit }) => {
           <input
             ref={PriceInput}
             type="number"
-            name="Price"
+            name="price"
             placeholder="Enter Price"
             className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
             required
@@ -216,7 +265,7 @@ const AddMenuItem = ({ onCustomerAdded, editingMenuItem, onCancelEdit }) => {
         </div>
       </div>
 
-      {/* {message && (
+      {message && (
         <div
           className={`px-5 py-2 rounded-lg ${
             message.includes("successfully")
@@ -226,7 +275,7 @@ const AddMenuItem = ({ onCustomerAdded, editingMenuItem, onCancelEdit }) => {
         >
           {message}
         </div>
-      )} */}
+      )}
 
       <div className="flex gap-4 m-12">
         <button
@@ -282,14 +331,6 @@ const AddMenuItem = ({ onCustomerAdded, editingMenuItem, onCancelEdit }) => {
 
         {isEditing && (
           <>
-            {/* <button
-              type="button"
-              onClick={handleDelete}
-              disabled={loading}
-              className="inline-flex rounded-full border border-transparent bg-red-600 px-7 py-3 text-center text-base font-medium text-white shadow-1 hover:bg-red-700 disabled:border-gray-3 disabled:bg-gray-3 disabled:text-dark-5"
-            >
-              Delete
-            </button> */}
             <button
               type="button"
               onClick={handleCancelEdit}

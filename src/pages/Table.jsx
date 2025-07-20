@@ -4,6 +4,7 @@ import StatCard from "../components/common/StatCard";
 import { useTranslation } from "react-i18next";
 import { Package } from "lucide-react";
 import T from "../components/table/Table";
+import TableForm from "../components/table/TableForm";
 
 const Table = () => {
   const [t] = useTranslation();
@@ -26,7 +27,7 @@ const Table = () => {
             color="#6366F1"
           />
         </motion.div>
-
+        {/* <TableForm /> */}
         <T />
       </main>
     </div>

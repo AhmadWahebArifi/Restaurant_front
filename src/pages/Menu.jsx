@@ -21,7 +21,11 @@ const ProductsPage = () => {
   const [editingMenuItem, setEditingMenuItem] = useState(null);
 
   const handleMenuItemAdded = useCallback(() => {
-    setRefreshTrigger((prev) => prev + 1);
+    console.log("handleMenuItemAdded called - triggering refresh");
+    setRefreshTrigger((prev) => {
+      console.log("Previous refresh trigger:", prev, "New value:", prev + 1);
+      return prev + 1;
+    });
     setShowSuccess(true);
     setEditingMenuItem(null); // Clear editing state after successful operation
   }, []);
@@ -53,14 +57,14 @@ const ProductsPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <StatCard name={ts} icon={Package} value={1234} color="#6366F1" />
+          {/* <StatCard name={ts} icon={Package} value={1234} color="#6366F1" />
           <StatCard name={tos} icon={TrendingUp} value={89} color="#10B981" />
           <StatCard
             name={re}
             icon={DollarSign}
             value={"$543,210"}
             color="#EF4444"
-          />
+          /> */}
         </motion.div>
         {/* <MenuForm /> */}
         <AddMenuItem 

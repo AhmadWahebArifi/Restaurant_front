@@ -15,8 +15,8 @@ const table = () => {
     table_2: localStorage.getItem(t2) === "true",
     table_3: localStorage.getItem(t3) === "true",
   });
-  const [tableCount, setTableCount] = useState(1);
 
+  const [tableCount, setTableCount] = useState(1);
   return (
     <SettingSection icon={TableIcon} title={"Table Status"}>
       <ToggleSwitch

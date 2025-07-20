@@ -55,7 +55,7 @@ const Customer = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <StatCard
+          {/* <StatCard
             name={t("totalusers")}
             icon={UsersIcon}
             value={userStats.totalUsers.toLocaleString()}
@@ -66,7 +66,7 @@ const Customer = () => {
             icon={UserCheck}
             value={userStats.activeUsers.toLocaleString()}
             color="#F59E0B"
-          />
+          /> */}
         </motion.div>
       </main>
       <CustomerForm
