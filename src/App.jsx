@@ -59,7 +59,7 @@ function App() {
       </div>
 
       <Sidebar />
-      <div className="flex-1">
+      <div className="flex-1 overflow-x-auto">
         <Routes>
           <Route path="/" element={<OverviewPage />} />
           <Route path="/products" element={<Menu />} />

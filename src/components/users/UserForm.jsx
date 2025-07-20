@@ -55,10 +55,10 @@ const UserForm = ({ onUserAdded, editingUser, onCancelEdit }) => {
       let response;
       if (isEditing && editingUser) {
         // Update existing user
-        response = await api.put(`/api/user/${editingUser.id}`, userData);
+        response = await api.put(`/api/employee/${editingUser.id}`, userData);
       } else {
         // Create new user
-        response = await api.post("/api/user", userData);
+        response = await api.post("/api/employee", userData);
       }
 
       if (response.status === 201 || response.status === 200) {
@@ -91,7 +91,7 @@ const UserForm = ({ onUserAdded, editingUser, onCancelEdit }) => {
 
     try {
       const response = await api.delete(`/api/user/${editingUser.id}`);
-      
+
       if (response.status === 200 || response.status === 204) {
         clearForm();
         if (onUserAdded) {
