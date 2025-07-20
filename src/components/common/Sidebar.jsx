@@ -47,7 +47,7 @@ const Sidebar = () => {
       href: "/payment",
     },
     {
-      name: t("Revenue"),
+      name: t("revenue"),
       icon: DollarSign,
       color: "#10B981",
       href: "/revenue",

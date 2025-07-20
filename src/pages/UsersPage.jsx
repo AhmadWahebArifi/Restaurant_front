@@ -65,13 +65,13 @@ const UsersPage = () => {
             color="#F59E0B"
           />
         </motion.div>
-        <UserForm 
-          onUserAdded={handleUserAdded} 
+        <UserForm
+          onUserAdded={handleUserAdded}
           editingUser={editingUser}
           onCancelEdit={handleCancelEdit}
         />
-        <UsersTable 
-          refreshTrigger={refreshTrigger} 
+        <UsersTable
+          refreshTrigger={refreshTrigger}
           onEditUser={handleEditUser}
         />
       </main>

@@ -62,5 +62,6 @@
   "addorders": "Add Orders",
   "date": "Date",
   "orderid": "Order ID",
-  "total": "Total"
+  "total": "Total",
+  "revenue" : "Revenue"
 }
