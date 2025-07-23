@@ -4,28 +4,39 @@ const SuccessCard = ({
   message = "Customer added successfully!",
   duration = 2000,
   onClose,
+  inPage = false,
 }) => {
   const [show, setShow] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    setProgress(0);
+    const fillTimeout = setTimeout(() => setProgress(100), 50);
     const timer = setTimeout(() => {
       setShow(false);
       if (onClose) onClose();
     }, duration);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(fillTimeout);
+    };
   }, [duration, onClose]);
 
   return (
     <div
-      className={`fixed top-8 left-1/2 z-50 transform -translate-x-1/2 transition-all duration-500 ${
+      className={`$ {
+        inPage
+          ? "w-full max-w-2xl mr-0 mt-4"
+          : "fixed top-8 left-1/2 z-50 transform -translate-x-1/2"
+      } transition-all duration-500 ${
         show
           ? "opacity-100 scale-100"
           : "opacity-0 scale-90 pointer-events-none"
       }`}
     >
-      <div className="flex items-center gap-3 rounded-lg bg-green-500 px-6 py-4 shadow-lg text-white text-base font-semibold animate-bounce-in">
+      <div className="flex items-center gap-2 rounded-md bg-green-700 px-4 py-2 shadow text-green-900 text-sm font-medium animate-bounce-in relative">
         <svg
-          className="w-6 h-6 text-white"
+          className="w-4 h-4 text-green-600"
           fill="none"
           stroke="currentColor"
           strokeWidth={2}
@@ -38,6 +49,16 @@ const SuccessCard = ({
           />
         </svg>
         {message}
+        {/* Progress bar at the bottom */}
+        <div className="absolute left-0 bottom-0 w-full h-0.5 bg-green-200 rounded-b overflow-hidden">
+          <div
+            className="h-full bg-green-700 transition-all duration-[2000ms]"
+            style={{
+              width: `${progress}%`,
+              transitionDuration: `${duration}ms`,
+            }}
+          ></div>
+        </div>
       </div>
       <style>
         {`

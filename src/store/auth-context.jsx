@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { authAPI } from "../axios";
+import axios from "axios";
 
 const authContext = React.createContext({
   isLogin: false,

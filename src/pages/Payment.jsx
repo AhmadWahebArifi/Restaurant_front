@@ -5,20 +5,18 @@ import StatCard from "../components/common/StatCard";
 import { DollarSign, ShoppingCart, TrendingUp } from "lucide-react";
 import SalesOverviewChart from "../components/sales/SalesOverviewChart";
 import PaymentTable from "../components/payment/PaymentTable";
-// import SalesByCategoryChart from "../components/sales/SalesByCategoryChart";
-// import DailySalesTrend from "../components/sales/DailySalesTrend";
+import { useTranslation } from "react-i18next";
+import PaymentForm from "../components/payment/PaymentForm";
 
 const salesStats = {
-  totalRevenue: "$1,234,567",
-  averageOrderValue: "$78.90",
-  conversionRate: "3.45%",
-  salesGrowth: "12.3%",
+  totalRevenue: "$1034",
 };
 
 const Payment = () => {
+  const [t] = useTranslation();
   return (
     <div className="flex-1 overflow-auto relative z-10">
-      <Header title="Payment" />
+      <Header title={t("payments")} />
 
       <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
         <motion.div
@@ -28,26 +26,17 @@ const Payment = () => {
           transition={{ duration: 1 }}
         >
           <StatCard
-            name="Total Revenue"
+            name={t("totalrevenue")}
             icon={DollarSign}
             value={salesStats.totalRevenue}
             color="#6366F1"
           />
-          <StatCard
-            name="Avg. Order Value"
-            icon={ShoppingCart}
-            value={salesStats.averageOrderValue}
-            color="#10B981"
-          />
         </motion.div>
 
+        {/* <PaymentForm /> */}
         <PaymentTable />
-        <SalesOverviewChart />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* <SalesByCategoryChart />
-          <DailySalesTrend /> */}
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8"></div>
       </main>
     </div>
   );

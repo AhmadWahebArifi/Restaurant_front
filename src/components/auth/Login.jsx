@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import authContext from "../../store/auth-context";
 import App from "../../App";
 import Signup from "./Signup";
@@ -10,14 +10,14 @@ const Login = () => {
 
   return (
     <>
-      {/* {ctx.isLogin ? ( */}
-      <App />
-      {/* ) : (
+      {ctx.isLogin ? (
+        <App />
+      ) : (
         <Routes>
           <Route path="/" element={<LoginForm />} />
           <Route path="/signup-form" element={<Signup />} />
         </Routes>
-      )} */}
+      )}
     </>
   );
 };

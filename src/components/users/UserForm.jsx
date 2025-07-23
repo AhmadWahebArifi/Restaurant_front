@@ -3,30 +3,33 @@ import api from "../../axios";
 import authContext from "../../store/auth-context";
 import { useTranslation } from "react-i18next";
 
-const CustomerForm = ({ onCustomerAdded, editingCustomer, onCancelEdit }) => {
+const UserForm = ({ onUserAdded, editingUser, onCancelEdit }) => {
   const [t] = useTranslation();
 
   const nameInput = useRef();
-  const PhoneInput = useRef();
-  const AddressInput = useRef();
+  const emailInput = useRef();
+  const roleInput = useRef();
+  const statusInput = useRef();
   const ctx = useContext(authContext);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
-  // Populate form when editing customer
-  if (editingCustomer && !isEditing) {
-    nameInput.current.value = editingCustomer.name || "";
-    PhoneInput.current.value = editingCustomer.phone || "";
-    AddressInput.current.value = editingCustomer.address || "";
+  // Populate form when editing user
+  if (editingUser && !isEditing) {
+    nameInput.current.value = editingUser.name || "";
+    emailInput.current.value = editingUser.email || "";
+    roleInput.current.value = editingUser.role || "";
+    statusInput.current.value = editingUser.status || "";
     setIsEditing(true);
   }
 
   const clearForm = () => {
     nameInput.current.value = "";
-    PhoneInput.current.value = "";
-    AddressInput.current.value = "";
+    emailInput.current.value = "";
+    roleInput.current.value = "";
+    statusInput.current.value = "";
     setIsEditing(false);
   };
 
@@ -34,7 +37,7 @@ const CustomerForm = ({ onCustomerAdded, editingCustomer, onCancelEdit }) => {
     e.preventDefault();
 
     if (!ctx.isLogin) {
-      setError("Please login first to add customers.");
+      setError("Please login first to add users.");
       return;
     }
 
@@ -42,43 +45,44 @@ const CustomerForm = ({ onCustomerAdded, editingCustomer, onCancelEdit }) => {
     setError("");
 
     try {
-      const customerData = {
+      const userData = {
         name: nameInput.current.value,
-        phone: PhoneInput.current.value,
-        address: AddressInput.current.value,
+        email: emailInput.current.value,
+        role: roleInput.current.value,
+        status: statusInput.current.value,
       };
 
       let response;
-      if (isEditing && editingCustomer) {
-        // Update existing customer
-        response = await api.put(`/api/customer/${editingCustomer.id}`, customerData);
+      if (isEditing && editingUser) {
+        // Update existing user
+        response = await api.put(`/api/employee/${editingUser.id}`, userData);
       } else {
-        // Create new customer
-        response = await api.post("/api/customer", customerData);
+        // Create new user
+        response = await api.post("/api/employee", userData);
       }
 
       if (response.status === 201 || response.status === 200) {
         clearForm();
-        if (onCustomerAdded) {
-          onCustomerAdded();
+        if (onUserAdded) {
+          onUserAdded();
         }
       } else {
-        setError(`Failed to ${isEditing ? 'update' : 'add'} customer. Please try again.`);
+        setError(`Failed to ${isEditing ? 'update' : 'add'} user. Please try again.`);
       }
     } catch (error) {
-      setError(`Failed to ${isEditing ? 'update' : 'add'} customer. Please try again.`);
+      setError(`Failed to ${isEditing ? 'update' : 'add'} user. Please try again.`);
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!editingCustomer || !editingCustomer.id) {
-      setError("No customer selected for deletion.");
+    if (!editingUser || !editingUser.id) {
+      setError("No user selected for deletion.");
       return;
     }
 
-    if (!window.confirm("Are you sure you want to delete this customer?")) {
+    if (!window.confirm("Are you sure you want to delete this user?")) {
       return;
     }
 
@@ -86,18 +90,18 @@ const CustomerForm = ({ onCustomerAdded, editingCustomer, onCancelEdit }) => {
     setError("");
 
     try {
-      const response = await api.delete(`/api/customer/${editingCustomer.id}`);
-      
+      const response = await api.delete(`/api/user/${editingUser.id}`);
+
       if (response.status === 200 || response.status === 204) {
         clearForm();
-        if (onCustomerAdded) {
-          onCustomerAdded();
+        if (onUserAdded) {
+          onUserAdded();
         }
       } else {
-        setError("Failed to delete customer. Please try again.");
+        setError("Failed to delete user. Please try again.");
       }
     } catch (error) {
-      setError("Failed to delete customer. Please try again.");
+      setError("Failed to delete user. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -131,35 +135,57 @@ const CustomerForm = ({ onCustomerAdded, editingCustomer, onCancelEdit }) => {
         </div>
         <div className="p-5">
           <label
-            htmlFor="Phone"
+            htmlFor="email"
             className="mb-2.5 block text-base font-medium text-dark dark:text-white"
           >
-            {t("phone")}
+            {t("email")}
           </label>
           <input
-            ref={PhoneInput}
-            type="number"
-            name="Phone"
-            placeholder="Enter Phone number"
+            ref={emailInput}
+            type="email"
+            name="email"
+            placeholder="Enter email address"
             className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
             required
           />
         </div>
         <div className="p-5">
           <label
-            htmlFor="Address"
+            htmlFor="role"
             className="mb-2.5 block text-base font-medium text-dark dark:text-white"
           >
-            {t("address")}
+            {t("role")}
           </label>
-          <input
-            ref={AddressInput}
-            type="text"
-            name="Address"
-            placeholder="Enter Address"
-            className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark placeholder-dark-6 outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:placeholder-dark-5"
+          <select
+            ref={roleInput}
+            name="role"
+            className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:bg-gray-700"
             required
-          />
+          >
+            <option value="" className="text-black bg-white">Select Role</option>
+            <option value="Manager" className="text-black bg-white">Manager</option>
+            <option value="Staff" className="text-black bg-white">Staff</option>
+            <option value="Cleaner" className="text-black bg-white">Cleaner</option>
+            <option value="Owner" className="text-black bg-white">Owner</option>
+          </select>
+        </div>
+        <div className="p-5">
+          <label
+            htmlFor="status"
+            className="mb-2.5 block text-base font-medium text-dark dark:text-white"
+          >
+            {t("status")}
+          </label>
+          <select
+            ref={statusInput}
+            name="status"
+            className="w-96 rounded-lg border border-stroke bg-transparent px-5 py-3 text-dark outline-hidden focus:border-primary dark:border-dark-3 dark:text-white dark:bg-gray-700"
+            required
+          >
+            <option value="" className="text-black bg-white">Select Status</option>
+            <option value="Active" className="text-black bg-white">Active</option>
+            <option value="Inactive" className="text-black bg-white">Inactive</option>
+          </select>
         </div>
       </div>
 
@@ -199,35 +225,40 @@ const CustomerForm = ({ onCustomerAdded, editingCustomer, onCancelEdit }) => {
               </svg>
             ) : (
               <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="fill-current"
               >
-                <g clipPath="url(#clip0_906_8052)">
-                  <path d="M13.1875 9.28125H10.6875V6.8125C10.6875 6.4375 10.375 6.125 9.96875 6.125C9.59375 6.125 9.28125 6.4375 9.28125 6.84375V9.3125H6.8125C6.4375 9.3125 6.125 9.625 6.125 10.0312C6.125 10.4062 6.4375 10.7187 6.84375 10.7187H9.3125V13.1875C9.3125 13.5625 9.625 13.875 10.0312 13.875C10.4062 13.875 10.7187 13.5625 10.7187 13.1562V10.6875H13.1875C13.5625 10.6875 13.875 10.375 13.875 9.96875C13.875 9.59375 13.5625 9.28125 13.1875 9.28125Z" />
-                  <path d="M10 0.5625C4.78125 0.5625 0.5625 4.78125 0.5625 10C0.5625 15.2188 4.8125 19.4688 10.0312 19.4688C15.25 19.4688 19.5 15.2188 19.5 10C19.4688 4.78125 15.2188 0.5625 10 0.5625ZM10 18.0625C5.5625 18.0625 1.96875 14.4375 1.96875 10C1.96875 5.5625 5.5625 1.96875 10 1.96875C14.4375 1.96875 18.0625 5.5625 18.0625 10C18.0625 14.4375 14.4375 18.0625 10 18.0625Z" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_906_8052">
-                    <rect width="20" height="20" fill="white" />
-                  </clipPath>
-                </defs>
+                <path
+                  d="M8 1V15M15 8H1"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             )}
           </span>
-          {loading ? `${t("adding")}` : isEditing ? "Update Customer" : `${t("addcustomer")}`}
+          {loading ? "Processing..." : isEditing ? "Update User" : "Add User"}
         </button>
 
         {isEditing && (
           <>
+            {/* <button
+              type="button"
+              onClick={handleDelete}
+              disabled={loading}
+              className="inline-flex rounded-full border border-transparent bg-red-600 px-7 py-3 text-center text-base font-medium text-white shadow-1 hover:bg-red-700 disabled:border-gray-3 disabled:bg-gray-3 disabled:text-dark-5"
+            >
+              Delete User
+            </button> */}
             <button
               type="button"
               onClick={handleCancelEdit}
               disabled={loading}
-              className="inline-flex rounded-full border border-gray-600 bg-transparent px-7 py-3 text-center text-base font-medium text-gray-300 shadow-1 hover:bg-gray-700 disabled:border-gray-3 disabled:bg-gray-3 disabled:text-dark-5"
+              className="inline-flex rounded-full border border-gray-300 bg-transparent px-7 py-3 text-center text-base font-medium text-gray-700 shadow-1 hover:bg-gray-50 disabled:border-gray-3 disabled:bg-gray-3 disabled:text-dark-5"
             >
               Cancel
             </button>
@@ -237,4 +268,5 @@ const CustomerForm = ({ onCustomerAdded, editingCustomer, onCancelEdit }) => {
     </form>
   );
 };
-export default CustomerForm;
+
+export default UserForm; 
