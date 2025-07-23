@@ -20,7 +20,11 @@ const UsersPage = () => {
   const [editingUser, setEditingUser] = useState(null);
 
   const handleUserAdded = useCallback(() => {
-    setRefreshTrigger((prev) => prev + 1);
+    console.log("handleUserAdded called - triggering refresh");
+    setRefreshTrigger((prev) => {
+      console.log("Previous refresh trigger:", prev, "New value:", prev + 1);
+      return prev + 1;
+    });
     setShowSuccess(true);
     setEditingUser(null); // Clear editing state after successful operation
   }, []);
@@ -52,7 +56,7 @@ const UsersPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <StatCard
+          {/* <StatCard
             name={t("totalemployee")}
             icon={UsersIcon}
             value={userStats.totalUsers.toLocaleString()}
@@ -63,15 +67,15 @@ const UsersPage = () => {
             icon={UserCheck}
             value={userStats.activeUsers.toLocaleString()}
             color="#F59E0B"
-          />
+          /> */}
         </motion.div>
-        <UserForm 
-          onUserAdded={handleUserAdded} 
+        <UserForm
+          onUserAdded={handleUserAdded}
           editingUser={editingUser}
           onCancelEdit={handleCancelEdit}
         />
-        <UsersTable 
-          refreshTrigger={refreshTrigger} 
+        <UsersTable
+          refreshTrigger={refreshTrigger}
           onEditUser={handleEditUser}
         />
       </main>

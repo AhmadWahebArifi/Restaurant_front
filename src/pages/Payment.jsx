@@ -25,12 +25,12 @@ const Payment = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <StatCard
+          {/* <StatCard
             name={t("totalrevenue")}
             icon={DollarSign}
             value={salesStats.totalRevenue}
             color="#6366F1"
-          />
+          /> */}
         </motion.div>
 
         {/* <PaymentForm /> */}

@@ -17,7 +17,6 @@ const userStats = {
 // {showSuccess && <SuccessCard onClose={() => setShowSuccess(false)} />}
 const Customer = () => {
   const { t, i18n } = useTranslation();
-  const ov = t("overview");
 
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -56,7 +55,7 @@ const Customer = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <StatCard
+          {/* <StatCard
             name={t("totalusers")}
             icon={UsersIcon}
             value={userStats.totalUsers.toLocaleString()}
@@ -67,16 +66,16 @@ const Customer = () => {
             icon={UserCheck}
             value={userStats.activeUsers.toLocaleString()}
             color="#F59E0B"
-          />
+          /> */}
         </motion.div>
       </main>
-      <CustomerForm 
-        onCustomerAdded={handleCustomerAdded} 
+      <CustomerForm
+        onCustomerAdded={handleCustomerAdded}
         editingCustomer={editingCustomer}
         onCancelEdit={handleCancelEdit}
       />
-      <CustomerTable 
-        refreshTrigger={refreshTrigger} 
+      <CustomerTable
+        refreshTrigger={refreshTrigger}
         onEditCustomer={handleEditCustomer}
       />
     </div>

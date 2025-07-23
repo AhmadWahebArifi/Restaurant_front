@@ -54,13 +54,16 @@ const ProductsTable = ({ refreshTrigger, onEditMenuItem }) => {
   const [error, setError] = useState(null);
 
   const fetchMenuItems = async () => {
+    console.log("Fetching menu items...");
     setLoading(true);
     try {
       const response = await api.get("/api/menu-item");
+      console.log("API Response:", response.data);
 
       let menuItems = response.data.menuItem; // ✅ Extract the array
 
       if (Array.isArray(menuItems)) {
+        console.log("Menu items fetched successfully:", menuItems.length, "items");
         setMenuItems(menuItems);
         setFilteredProducts(menuItems);
       } else {

@@ -51,9 +51,12 @@ const UsersTable = ({ refreshTrigger, onEditUser }) => {
   const [filteredUsers, setFilteredUsers] = useState(USER_DATA);
 
   const fetchUsers = async () => {
+    console.log("=== FETCHING USERS ===");
+    console.log("Refresh trigger value:", refreshTrigger);
     setLoading(true);
     try {
       const response = await api.get("/api/employee");
+      console.log("API Response:", response.data);
 
       // Handle different response structures
       let userData = response.data;
@@ -61,7 +64,10 @@ const UsersTable = ({ refreshTrigger, onEditUser }) => {
         userData = response.data.data; // Handle nested data structure
       }
 
+      console.log("Processed user data:", userData);
+
       if (Array.isArray(userData)) {
+        console.log("Users fetched successfully:", userData.length, "users");
         setUsers(userData);
         setFilteredUsers(userData);
       } else {

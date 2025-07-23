@@ -28,7 +28,7 @@ const OrdersPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <StatCard
+          {/* <StatCard
             name={t("totalorders")}
             icon={ShoppingBag}
             value={orderStats.totalOrders}
@@ -51,7 +51,7 @@ const OrdersPage = () => {
             icon={DollarSign}
             value={orderStats.totalRevenue}
             color="#EF4444"
-          />
+          /> */}
         </motion.div>
 
         <OrdersTable />

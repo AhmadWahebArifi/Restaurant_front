@@ -41,18 +41,6 @@ const Sidebar = () => {
     { name: t("table"), icon: LayoutGrid, color: "#6EE7B7", href: "/table" },
     { name: t("users"), icon: Users, color: "#EC4899", href: "/users" },
     {
-      name: t("payments"),
-      icon: DollarSign,
-      color: "#10B981",
-      href: "/payment",
-    },
-    {
-      name: t("Revenue"),
-      icon: DollarSign,
-      color: "#10B981",
-      href: "/revenue",
-    },
-    {
       name: t("addorders"),
       icon: ShoppingCart,
       color: "#F59E0B",
@@ -64,6 +52,18 @@ const Sidebar = () => {
       color: "#F59E0B",
       href: "/orders",
     },
+    {
+      name: t("payments"),
+      icon: DollarSign,
+      color: "#10B981",
+      href: "/payment",
+    },
+    {
+      name: t("revenue"),
+      icon: DollarSign,
+      color: "#10B981",
+      href: "/revenue",
+    },
     { name: t("setting"), icon: Settings, color: "#6EE7B7", href: "/settings" },
   ];
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -71,8 +71,9 @@ const Sidebar = () => {
 
   return (
     <motion.div
-      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${isSidebarOpen ? "w-64" : "w-20"
-        }`}
+      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
+        isSidebarOpen ? "w-64" : "w-20"
+      }`}
       animate={{ width: isSidebarOpen ? 256 : 80 }}
     >
       <div className="h-full bg-blue-950 bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-gray-700">

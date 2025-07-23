@@ -1,5 +1,5 @@
 import Logo from "../../image/f4.png";
-import { Formik, Field, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage, isInteger } from "formik";
 import { Eye } from "lucide-react";
 import * as Yup from "yup";
 import { useContext, useState, useEffect } from "react";
@@ -44,7 +44,7 @@ const Form = () => {
               {/* form */}
               <Formik
                 initialValues={{ username: "", password: "" }}
-                validationSchema={LoginSchema}
+                // validationSchema={LoginSchema}
                 onSubmit={(values) => {
                   console.log(values.username);
                   ctx.onLogin(values.username, values.password);
