@@ -32,22 +32,11 @@ function App() {
     // Listen for storage changes (other tabs)
     window.addEventListener("storage", checkToken);
 
-    // Poll for changes in this tab
-    let lastToken = localStorage.getItem("auth-token");
-    const interval = setInterval(() => {
-      const currentToken = localStorage.getItem("auth-token");
-      if (currentToken !== lastToken) {
-        lastToken = currentToken;
-        checkToken();
-      }
-    }, 500);
-
     // Initial check
     checkToken();
 
     return () => {
       window.removeEventListener("storage", checkToken);
-      clearInterval(interval);
     };
   }, [ctx, navigate]);
 
